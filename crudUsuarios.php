@@ -43,7 +43,7 @@ if ($_SESSION['autenticado']!='si'){
             <!-- Main Content -->
             <div id="content">
                 <!-- barra de navegacion Topbar-->
-                   <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                   
      <?php include "barraNavegacion.php"?>
 
                <!-- End of Topbar -->
