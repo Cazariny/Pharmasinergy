@@ -31,12 +31,12 @@ if( $_SERVER['REQUEST_METHOD']== "POST"){ //lectura de controles
         $row = $result->fetch_assoc();
         $_SESSION["autenticado"] ="si";
         $_SESSION["idUsuario"] =$row["Id_Usuario"] ;
-        $_SESSION['usuarioAutenticado']= $row["N0ombre"];
+        $_SESSION['usuarioAutenticado']= $row["Nombre"];
         $_SESSION['noRolUsuario']= $row["Rol"];
-        if ($row["rol"]==1){
+        if ($row["Rol"]==1){
            $_SESSION['rolUsuario']= "Administrador" ;
         }else{
-          $_SESSION['rolUsuario']= "Cliente" ;
+          $_SESSION['rolUsuario']= "PACIENTE" ;
         }
         header("location:../proyecto/index.php");
       }else{

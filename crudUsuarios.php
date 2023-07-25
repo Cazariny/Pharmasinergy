@@ -43,7 +43,7 @@ if ($_SESSION['autenticado']!='si'){
             <!-- Main Content -->
             <div id="content">
                 <!-- barra de navegacion Topbar-->
-                   
+
      <?php include "barraNavegacion.php"?>
 
                <!-- End of Topbar -->
@@ -61,7 +61,7 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -91,32 +91,6 @@ if ($_SESSION['autenticado']!='si'){
                                             <th>Eliminar</th>
                                         </tr>
                                     </tfoot>
-                                    <?php
-                                    $servername = "localhost";
-                                    $username = "root";
-                                    $password = "";
-                                    $dbname = "Pharmasinergy";
-
-                                    //CREANDO CONEXION A LA VASE DE DATOS
-                                    $conn = new mysqli($servername, $username, $password, $dbname);
-                                   //vERIFICANDO LA CONEXION
-                                    if ($conn->connect_error) {
-                                      die("Conexion Fallida: " . $conn->connect_error);
-                                    } else {
-                                      $sql2 = "SELECT * FROM usuario";
-                                      $result2 =$conn->query($sql2);
-                                      if ($result2-> num_rows > 0) {
-                                        while ($row = $result2->fetch_assoc()) {
-                                          ?>
-                                          <tr>
-                                            <td></td>
-                                          </tr>
-                                          <?php
-                                        }
-                                      }
-                                    }
-
-                                      ?>
 
                                     <tbody>
                                       <?php
@@ -124,7 +98,6 @@ if ($_SESSION['autenticado']!='si'){
                                       $username = "root";
                                       $password = "";
                                       $dbname = "Pharmasinergy";
-
                                       //CREANDO CONEXION A LA VASE DE DATOS
                                       $conn = new mysqli($servername, $username, $password, $dbname);
                                       //Verificando Conexion
@@ -133,19 +106,25 @@ if ($_SESSION['autenticado']!='si'){
                                       } else {
                                         //Borrar un usario de la tabla usuario en vase a su id_usuario
                                         if (isset($_GET['eliminar'])) {
-                                          $idu2=$_GET['Id_Usuario'];
+                                          $idu2=$_GET['id_usuario'];
                                           $sql2 = "DELETE FROM Usuario WHERE Id_Usuario ='$idu2'";
+                                          echo $sql2;
+                                          // if ($conn->query($sql2) === TRUE) {
+                                          //   echo "Record updated successfully";
+                                          // } else {
+                                          //   echo "Error updating record: " . $conn->error;
+                                          // }
                                           $result = $conn->query($sql2);
                                         }
 
-                                        if (isset($_POST['modificacion'])){
+                                        if (isset($_POST['actualizar'])){
                                           $nombreUsuario = $_POST['txtUsuario'];
                                           $passwordUsuario = $_POST['pswUsuario'];
                                           $RolUsuario = $_POST['nmbRol'];
-                                          $idUsu =$_POST['Id_Usuario'];
+                                          $idUsu =$_POST['id_usuario'];
                                           $sql4 = "UPDATE usuario SET Nombre='nombreUsuario',
                                           Password='$passwordUsuario', Rol=$RolUsuario WHERE Id_Usuario = $idUsu";
-                                          $conn-> query ($sql4);
+                                          $conn->query($sql4);
                                         }
 
                                         //Insertar un nuevo Usuario
@@ -156,22 +135,20 @@ if ($_SESSION['autenticado']!='si'){
 
                                           $sql3 = "INSERT INTO usuario(Id_Usuario, Nombre, Password, Rol) VALUES(0, '$nombreUsuario', '$passwordUsuario', '$rolUsuario')";
                                           $conn->query($sql3);
-
-
                                         }
 
                                         $sql = "SELECT * FROM usuario";
-                                        $result = $conn -> query($sql);
+                                        $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
-                                          while($row = $result2->fetch_assoc()){
+                                          while($row = $result->fetch_assoc()){
                                          ?>
                                         <tr>
                                             <td><?php  echo $row['Id_Usuario'] ?></td>
                                             <td><?php  echo $row['Nombre'] ?></td>
                                             <td><?php  echo $row['Password'] ?></td>
                                             <td><?php  echo $row['Rol'] ?></td>
-                                            <td> <a href="../proyecto/crudUsuario.php#actualiza?id_usuario=<?php echo $row['Id_Usuario'].'&actualizar=1' ?>">Actualizar</a> </td>
-                                            <td><a href="../proyecto/crudUsuario.php#actualiza?id_usuario=<?php echo $row['Id_Usuario'].'&eliminar=1' ?>">Eliminar</a> </td>
+                                            <td><a href="../proyecto/crudUsuarios.php?actualizar&id_usuario=<?php echo $row['Id_Usuario'] ?>">Actualizar</a> </td>
+                                            <td><a href="../proyecto/crudUsuarios.php?id_usuario=<?php echo $row['Id_Usuario'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
                                         <?php
                                       }//Cierre While
@@ -184,8 +161,8 @@ if ($_SESSION['autenticado']!='si'){
                             </div>
                         </div>
                     </div>
-<?php include "altaModificacionUsuario.php";
- ?>
+                    <?php include "altaModificacionUsuario.php" ?>
+
                 </div>
                 <!-- /.container-fluid -->
 
