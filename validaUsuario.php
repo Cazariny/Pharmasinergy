@@ -13,10 +13,10 @@ if( $_SERVER['REQUEST_METHOD']== "POST"){ //lectura de controles
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname="Pharmasinergy";
+    $dbname="pharmasinergy";
 
     // Creando la conexion con Mysql
-    $conn = new mysqli($servername, $username, $password,$dbname);
+    $conn = new mysqli($servername, $username, $password,$dbname, 3307);
 
     // Verificando la conexion
     if ($conn->connect_error) {
@@ -35,8 +35,12 @@ if( $_SERVER['REQUEST_METHOD']== "POST"){ //lectura de controles
         $_SESSION['noRolUsuario']= $row["Rol"];
         if ($row["Rol"]==1){
            $_SESSION['rolUsuario']= "Administrador" ;
-        }else{
-          $_SESSION['rolUsuario']= "PACIENTE" ;
+        }else if ($row["Rol"]==2) {
+          $_SESSION['rolUsuario']= "Doctor";
+        }else if ($row["Rol"]==3){
+          $_SESSION['rolUsuario']= "Farmaceutico";
+        }else if ($row["Rol"]==4){
+          $_SESSION['rolUsuario']= "Cliente";
         }
         header("location:../proyecto/index.php");
       }else{

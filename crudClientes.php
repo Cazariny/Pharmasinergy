@@ -61,32 +61,34 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Clientes</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Registro de Usuarios</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Registro de Clientes</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id Usuario</th>
+                                            <th>Id Cliente</th>
                                             <th>Nombre</th>
-                                            <th>Password</th>
-                                            <th>Rol</th>
+                                            <th>Direccion</th>
+                                            <th>Telefono</th>
+                                            <th>RFC</th>
                                             <th>Actualizar</th>
                                             <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Id Usuario</th>
+                                            <th>Id Cliente</th>
                                             <th>Nombre</th>
-                                            <th>Password</th>
-                                            <th>Rol</th>
+                                            <th>Direccion</th>
+                                            <th>Telefono</th>
+                                            <th>RFC</th>
                                             <th>Actualizar</th>
                                             <th>Eliminar</th>
                                         </tr>
@@ -106,8 +108,8 @@ if ($_SESSION['autenticado']!='si'){
                                       } else {
                                         //Borrar un usario de la tabla usuario en vase a su id_usuario
                                         if (isset($_GET['eliminar'])) {
-                                          $idu2=$_GET['id_usuario'];
-                                          $sql2 = "DELETE FROM Usuario WHERE Id_Usuario ='$idu2'";
+                                          $idcli2=$_GET['id_cliente'];
+                                          $sql2 = "DELETE FROM Producto WHERE Id_Cliente ='$idcli2'";
                                           echo $sql2;
                                           // if ($conn->query($sql2) === TRUE) {
                                           //   echo "Record updated successfully";
@@ -118,37 +120,44 @@ if ($_SESSION['autenticado']!='si'){
                                         }
 
                                         if (isset($_POST['actualizar'])){
-                                          $nombreUsuario = $_POST['txtUsuario'];
-                                          $passwordUsuario = $_POST['pswUsuario'];
-                                          $RolUsuario = $_POST['nmbRol'];
-                                          $idUsu =$_POST['id_usuario'];
-                                          $sql4 = "UPDATE usuario SET Nombre='$nombreUsuario',
-                                          Password='$passwordUsuario', Rol=$RolUsuario WHERE Id_Usuario = $idUsu";
+                                          $NombreCliente = $_POST['txtNombre'];
+                                          $NumPaciente = $_POST['numPaciente'];
+                                          $Apellido = $_POST['txtApellido'];
+                                          $RFC = $_POST['txtRFC'];
+                                          $Direccion = $_POST['txtDireccion'];
+                                          $idCli =$_POST['id_cliente'];
+                                          $sql4 = "UPDATE Cliente SET Nombre='$NombreCliente',
+                                          Id_Paciente='$NumPaciente', Apellido= '$Apellido', RFC='$RFC', Direccion = '$Direccion'
+                                          WHERE Id_Cliente = $idCli";
                                           $conn->query($sql4);
                                         }
 
                                         //Insertar un nuevo Usuario
                                         if(isset($_POST['alta'])){
-                                          $nombreUsuario = $_POST['txtUsuario'];
-                                          $passwordUsuario = $_POST['pswUsuario'];
-                                          $rolUsuario = $_POST['nmbRol'];
+                                          $NombreCliente = $_POST['txtNombre'];
+                                          $NumPaciente = $_POST['numPaciente'];
+                                          $Apellido = $_POST['txtApellido'];
+                                          $RFC = $_POST['txtRFC'];
+                                          $Direccion = $_POST['txtDireccion'];
 
-                                          $sql3 = "INSERT INTO usuario(Id_Usuario, Nombre, Password, Rol) VALUES(0, '$nombreUsuario', '$passwordUsuario', '$rolUsuario')";
+                                          $sql3 = "INSERT INTO productos(Id_Cliente, Id_Paciente, Nombre, Apellido, RFC, Direccion )
+                                          VALUES(0, '$NombreCliente', '$NumPaciente', '$Apellido', '$RFC', '$Direccion')";
                                           $conn->query($sql3);
                                         }
 
-                                        $sql = "SELECT * FROM usuario";
+                                        $sql = "SELECT * FROM Productos";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                           while($row = $result->fetch_assoc()){
                                          ?>
                                         <tr>
-                                            <td><?php  echo $row['Id_Usuario'] ?></td>
+                                            <td><?php  echo $row['Id_Cliente'] ?></td>
                                             <td><?php  echo $row['Nombre'] ?></td>
-                                            <td><?php  echo $row['Password'] ?></td>
-                                            <td><?php  echo $row['Rol'] ?></td>
-                                            <td><a href="../proyecto/crudUsuarios.php?actualizar&id_usuario=<?php echo $row['Id_Usuario'] ?>">Actualizar</a> </td>
-                                            <td><a href="../proyecto/crudUsuarios.php?id_usuario=<?php echo $row['Id_Usuario'].'&eliminar=1' ?>">Eliminar</a> </td>
+                                            <td><?php  echo $row['Direccion'] ?></td>
+                                            <td><?php  echo $row['Telefono'] ?></td>
+                                            <td><?php  echo $row['RFC'] ?></td>
+                                            <td><a href="../proyecto/crudClientes.php?actualizar&id_cliente=<?php echo $row['Id_Cliente'] ?>">Actualizar</a> </td>
+                                            <td><a href="../proyecto/crudClientes.php?id_cliente=<?php echo $row['Id_Cliente'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
                                         <?php
                                       }//Cierre While
@@ -161,7 +170,7 @@ if ($_SESSION['autenticado']!='si'){
                             </div>
                         </div>
                     </div>
-                    <?php include "altaModificacionUsuario.php" ?>
+                    <?php include "altaModificacionProducto.php" ?>
 
                 </div>
                 <!-- /.container-fluid -->
