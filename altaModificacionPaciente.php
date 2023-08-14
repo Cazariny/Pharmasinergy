@@ -12,8 +12,8 @@
 
    if (isset($_GET['actualizar'])){
 
-    $idClienteModificar = $_GET['id_cliente'];
-    $sql4 = "SELECT * FROM Cliente WHERE Id_Cliente= $idClienteModificar";
+    $idPacienteModificar = $_GET['id_paciente'];
+    $sql4 = "SELECT * FROM Paciente WHERE Id_Paciente= $idPacienteModificar";
             $result4 = $conn->query($sql4);
             if ($result4->num_rows > 0) {
                 $row = $result4->fetch_assoc();
@@ -23,16 +23,9 @@
     <div id="modificar">
   <h2>Modificacion de Clientes</h2></div>
   <form action="../proyecto/crudClientes.php" method="post">
-    <div class="mb-3 mt-3">
-      <label for="Id_Paciente">Numero de Paciente:</label>
-      <select class="form-control" name="numPaciente">
-
-
-      </select>
-    </div>
     <div class="mb-3">
       <label for="Nombre">Nombre:</label>
-      <input type="text" class="form-control" id="Nom_Cliente" placeholder="Introduce el nombre del cliente"
+      <input type="text" class="form-control" id="Nom_Paciente" placeholder="Introduce el nombre del cliente"
        name="txtNombre"
        value ="<?php echo $row['Nombre'];?>">
     </div>
@@ -40,13 +33,13 @@
       <label for="Nombre">Apellido:</label>
       <input type="text" class="form-control" id="Apellido" placeholder="Introduce el Apellido"
        name="txtApellido"
-       value ="<?php echo $row['Apellido'];?>">
+       value ="<?php echo $row['Apellidos'];?>">
     </div>
     <div class="mb-3">
-      <label for="Nombre">RFC:</label>
-      <input type="text" class="form-control" id="RFC" placeholder="Introduce el RFC"
-       name="txtRFC"
-       value ="<?php echo $row['RFC'];?>">
+      <label for="Nombre">Edad:</label>
+      <input type="number" class="form-control" id="Edad" placeholder="Introduce el RFC"
+       name="numEdad"
+       value ="<?php echo $row['Edad'];?>">
     </div>
     <div class="mb-3">
       <label for="Direccion">Direccion:</label>
@@ -54,7 +47,7 @@
        name="txtDireccion"
        value ="<?php echo $row['Direccion'];?>">
     </div>
-    <input type ="hidden" name="id_cliente" value="<?php echo $idClienteModificar?>">
+    <input type ="hidden" name="id_paciente" value="<?php echo $idPacienteModificar?>">
     <input type ="hidden" name="actualizar" value="1">
     <button type="submit" class="btn btn-primary">Actualizar</button>
   </form>
@@ -65,29 +58,22 @@
 ?>
 <div class="container mt-3">
   <div id="alta">
-  <h2>Alta de Clientes</h2> </div>
+  <h2>Alta de Pacientes</h2> </div>
   <form action="../proyecto/crudClientes.php" method="post">
-    <div class="mb-3 mt-3">
-      <label for="Id_Paciente">Numero de Paciente:</label>
-      <select class="form-control" name="NumPaciente">
-
-
-      </select>
-    </div>
     <div class="mb-3">
       <label for="Nombre">Nombre:</label>
-      <input type="text" class="form-control" id="Nom_Cliente" placeholder="Introduce el nombre del cliente"
+      <input type="text" class="form-control" id="Nom_Paciente" placeholder="Introduce el nombre del Paciente"
        name="txtNombre">
     </div>
     <div class="mb-3">
       <label for="Nombre">Apellido:</label>
-      <input type="text" class="form-control" id="Apellido" placeholder="Introduce el Apellido"
+      <input type="text" class="form-control" id="Apellidos" placeholder="Introduce los Apellidos"
        name="txtApellido"
     </div>
     <div class="mb-3">
-      <label for="Nombre">RFC:</label>
-      <input type="text" class="form-control" id="RFC" placeholder="Introduce el RFC"
-       name="txtRFC">
+      <label for="Nombre">Edad:</label>
+      <input type="number" class="form-control" id="Edad" placeholder="Introduce La Edad"
+       name="numEdad">
     </div>
     <div class="mb-3">
       <label for="Direccion">Direccion:</label>

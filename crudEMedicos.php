@@ -52,45 +52,45 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
                  <div class="card shadow mb-4">
                           <!-- Card Header -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <!-- <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                    Pharmasinergy
-                      </div>
+                      </div> -->
                     </div>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Clientes</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Historia Clinica</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Registro de Clientes</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Registro de Historias Clinicas</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id Cliente</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>RFC</th>
-                                            <th>Direccion</th>
-                                            <th>Actualizar</th>
-                                            <th>Eliminar</th>
+                                            <th>Id Historia</th>
+                                          <th>Nombre Paciente</th>
+                                          <th>Informacion</th>
+                                          <th>Altura</th>
+                                          <th>Peso</th>
+                                          <th>Actualizar</th>
+                                          <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Id Cliente</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>RFC</th>
-                                            <th>Direccion</th>
-                                            <th>Actualizar</th>
-                                            <th>Eliminar</th>
+                                          <th>Id Expediente</th>
+                                          <th>Nombre Paciente</th>
+                                          <th>Informacion</th>
+                                          <th>Altura</th>
+                                          <th>Peso</th>
+                                          <th>Actualizar</th>
+                                          <th>Eliminar</th>
                                         </tr>
                                     </tfoot>
 
@@ -108,8 +108,8 @@ if ($_SESSION['autenticado']!='si'){
                                       } else {
                                         //Borrar un usario de la tabla usuario en vase a su id_usuario
                                         if (isset($_GET['eliminar'])) {
-                                          $idcli2=$_GET['id_cliente'];
-                                          $sql2 = "DELETE FROM Cliente WHERE Id_Cliente ='$idcli2'";
+                                          $idExM2=$_GET['id_historia'];
+                                          $sql2 = "DELETE FROM Historial WHERE Id_Historia ='$idExM2'";
                                           echo $sql2;
                                           // if ($conn->query($sql2) === TRUE) {
                                           //   echo "Record updated successfully";
@@ -120,44 +120,51 @@ if ($_SESSION['autenticado']!='si'){
                                         }
 
                                         if (isset($_POST['actualizar'])){
-                                          $NombreCliente = $_POST['txtNombre'];
-                                          $NumPaciente = $_POST['numPaciente'];
-                                          $Apellido = $_POST['txtApellido'];
-                                          $RFC = $_POST['txtRFC'];
-                                          $Direccion = $_POST['txtDireccion'];
-                                          $idCli =$_POST['id_cliente'];
-                                          $sql4 = "UPDATE Cliente SET Nombre='$NombreCliente',
-                                          Id_Paciente='$NumPaciente', Apellido= '$Apellido', RFC='$RFC', Direccion = '$Direccion'
-                                          WHERE Id_Cliente = $idCli";
+                                          $Paciente = $_POST['Paciente'];
+                                          $Informacion = $_POST['txtInformacion'];
+                                          $Alergias = $_POST['txtAlergias'];
+                                          $Antecedentes = $_POST['txtAntecendentes'];
+                                          $Altura = $_POST['numAltura'];
+                                          $Peso = $_POST['numPeso'];
+                                          $idExM =$_POST['id_historia'];
+                                          $sql4 = "UPDATE Historial SET Paciente='$Paciente',
+                                          Informacion='$Informacion', Alergias='$Alergias',
+                                          Antecedentes= '$Antecedentes', Altura = '$Altura',
+                                          Peso = '$Peso'
+                                          WHERE Id_Historia = $idExM";
                                           $conn->query($sql4);
                                         }
 
                                         //Insertar un nuevo Usuario
                                         if(isset($_POST['alta'])){
-                                          $NombreCliente = $_POST['txtNombre'];
-                                          $NumPaciente = $_POST['numPaciente'];
-                                          $Apellido = $_POST['txtApellido'];
-                                          $RFC = $_POST['txtRFC'];
-                                          $Direccion = $_POST['txtDireccion'];
+                                          $Paciente = $_POST['Paciente'];
+                                          $Informacion = $_POST['txtInformacion'];
+                                          $Alergias = $_POST['txtAlergias'];
+                                          $Antecedentes = $_POST['txtAntecendentes'];
+                                          $Altura = $_POST['numAltura'];
+                                          $Peso = $_POST['numPeso'];
 
-                                          $sql3 = "INSERT INTO Cliente(Id_Cliente, Id_Paciente, Nombre, Apellido, RFC, Direccion )
-                                          VALUES(0, '$NombreCliente', '$NumPaciente', '$Apellido', '$RFC', '$Direccion')";
+                                          $sql3 = "INSERT INTO Historia(Id_Historia, Id_Paciente , Informacion, Alergias, Antecedentes, Altura, Peso)
+                                          VALUES(0, '$Paciente', '$Informacion', '$Alergias', '$Antecedentes', 'Altura', 'Peso')";
                                           $conn->query($sql3);
                                         }
 
-                                        $sql = "SELECT * FROM Cliente";
+                                        $sql = "SELECT HIS.Id_Historia, PAC.Nombre + ' ' + PAC.Apellidos as Nombre, HIS.Informacion, HIS.Altura, HIS.Peso
+                                        FROM Historial AS HIS
+                                        JOIN Paciente AS PAC
+                                        ON 'HIS.Id_Paciente' = 'PAC.Id_Paciente'";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                           while($row = $result->fetch_assoc()){
                                          ?>
                                         <tr>
-                                            <td><?php  echo $row['Id_Cliente'] ?></td>
+                                            <td><?php  echo $row['Id_Historia'] ?></td>
                                             <td><?php  echo $row['Nombre'] ?></td>
-                                            <td><?php  echo $row['Direccion'] ?></td>
-                                            <td><?php  echo $row['Telefono'] ?></td>
-                                            <td><?php  echo $row['RFC'] ?></td>
-                                            <td><a href="../proyecto/crudClientes.php?actualizar&id_cliente=<?php echo $row['Id_Cliente'] ?>">Actualizar</a> </td>
-                                            <td><a href="../proyecto/crudClientes.php?id_cliente=<?php echo $row['Id_Cliente'].'&eliminar=1' ?>">Eliminar</a> </td>
+                                            <td><?php  echo $row['Descripcion'] ?></td>
+                                            <td><?php  echo $row['Costo'] ?></td>
+                                            <td><?php  echo $row['Existencia'] ?></td>
+                                            <td><a href="../proyecto/crudEMedicos.php?actualizar&Id_historia=<?php echo $row['Id_Historia'] ?>">Actualizar</a> </td>
+                                            <td><a href="../proyecto/crudEMedicos.php?id_historia=<?php echo $row['Id_Historia'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
                                         <?php
                                       }//Cierre While
@@ -170,7 +177,7 @@ if ($_SESSION['autenticado']!='si'){
                             </div>
                         </div>
                     </div>
-                    <?php include "altaModificacionCliente.php" ?>
+                    <?php include "altaModificacionEMedicos.php" ?>
 
                 </div>
                 <!-- /.container-fluid -->

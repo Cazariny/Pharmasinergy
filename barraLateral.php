@@ -52,9 +52,19 @@
       if ($_SESSION['noRolUsuario']==2) {
      ?>
      <li class="nav-item">
-         <a class="nav-link" href="../proyecto/crudUsuarios.php">
+         <a class="nav-link" href="../proyecto/crudPacientes.php">
              <i class="fas fa-fw fa-chart-area"></i>
-             <span>Usuarios</span></a>
+             <span>Pacientes</span></a>
+     </li>
+     <li class="nav-item">
+         <a class="nav-link" href="../proyecto/crudConsultas.php">
+             <i class="fas fa-fw fa-chart-area"></i>
+             <span>Consultas</span></a>
+     </li>
+     <li class="nav-item">
+         <a class="nav-link" href="../proyecto/crudEMedicos.php">
+             <i class="fas fa-fw fa-chart-area"></i>
+             <span>Expedientes Medicos</span></a>
      </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
