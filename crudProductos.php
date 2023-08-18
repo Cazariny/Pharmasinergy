@@ -111,11 +111,6 @@ if ($_SESSION['autenticado']!='si'){
                                           $idpro2=$_GET['id_producto'];
                                           $sql2 = "DELETE FROM Producto WHERE Id_Producto ='$idpro2'";
                                           echo $sql2;
-                                          // if ($conn->query($sql2) === TRUE) {
-                                          //   echo "Record updated successfully";
-                                          // } else {
-                                          //   echo "Error updating record: " . $conn->error;
-                                          // }
                                           $result = $conn->query($sql2);
                                         }
 
@@ -124,13 +119,17 @@ if ($_SESSION['autenticado']!='si'){
                                           $Medicamento = $_POST['txtProducto'];
                                           $Descripcion = $_POST['txtDescripcion'];
                                           $Marca = $_POST['numMarca'];
+                                          $UnidadMedida = $_POST['txtUMedida'];
                                           $CostDir = $_POST['numCostDir'];
                                           $Precio = $_POST['numPrecio'];
                                           $Existencia = $_POST['numExist'];
                                           $PuntoReorden = $_POST['numPReorden'];
                                           $idPro =$_POST['id_producto'];
-                                          $sql4 = "UPDATE productos SET Nombre='nombreUsuario',
-                                          Password='$passwordUsuario', Rol=$RolUsuario WHERE Id_Usuario = $idUsu";
+                                          $sql4 = "UPDATE productos SET Id_Medicamento='$Medicamento',
+                                          EsMedicamento='$IsMedicamento', Descripcion=$Descripcion,
+                                          Id_Marca='$Marca', UnidadMedida='$UnidadMedida', CostoDirecto='$CostDir',
+                                          Precio='$Precio', Existencia='$Existencia', PuntoReorden='$PuntoReorden'
+                                          WHERE Id_Producto = $idPro";
                                           $conn->query($sql4);
                                         }
 
@@ -140,12 +139,14 @@ if ($_SESSION['autenticado']!='si'){
                                           $Medicamento = $_POST['txtProducto'];
                                           $Descripcion = $_POST['txtDescripcion'];
                                           $Marca = $_POST['Marca'];
+                                          $UnidadMedida = $_POST['txtUMedida'];
                                           $CostDir = $_POST['numCostDir'];
                                           $Precio = $_POST['numPrecio'];
                                           $Existencia = $_POST['numExist'];
                                           $PuntoReorden = $_POST['numPReorden'];
 
-                                          $sql3 = "INSERT INTO productos(Id_Usuario, Nombre, Password, Rol) VALUES(0, '$nombreUsuario', '$passwordUsuario', '$rolUsuario')";
+                                          $sql3 = "INSERT INTO Productos(Id_Producto, Id_Medicamento,EsMedicamento , Descripcion, Id_Marca, UnidadMedida, CostoDirecto, Precio, Existencia, PuntoReorden)
+                                          VALUES(0, '$Medicamento', '$IsMedicamento', '$Descripcion', '$Marca', '$UnidadMedida', '$CostDir', '$Precio', '$Existencia', '$PuntoReorden')";
                                           $conn->query($sql3);
                                         }
 
@@ -160,8 +161,8 @@ if ($_SESSION['autenticado']!='si'){
                                             <td><?php  echo $row['Descripcion'] ?></td>
                                             <td><?php  echo $row['Costo'] ?></td>
                                             <td><?php  echo $row['Existencia'] ?></td>
-                                            <td><a href="../proyecto/crudProductos.php?actualizar&id_usuario=<?php echo $row['Id_Usuario'] ?>">Actualizar</a> </td>
-                                            <td><a href="../proyecto/crudProductos.php?id_usuario=<?php echo $row['Id_Usuario'].'&eliminar=1' ?>">Eliminar</a> </td>
+                                            <td><a href="../proyecto/crudProductos.php?actualizar&id_producto=<?php echo $row['Id_Producto'] ?>">Actualizar</a> </td>
+                                            <td><a href="../proyecto/crudProductos.php?id_producto=<?php echo $row['Id_Producto'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
                                         <?php
                                       }//Cierre While

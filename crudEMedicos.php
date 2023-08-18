@@ -100,7 +100,7 @@ if ($_SESSION['autenticado']!='si'){
                                       $username = "root";
                                       $password = "";
                                       $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA VASE DE DATOS
+                                      //CREANDO CONEXION A LA BASE DE DATOS
                                       $conn = new mysqli($servername, $username, $password, $dbname, 3307);
                                       //Verificando Conexion
                                       if ($conn->connect_error) {
@@ -111,11 +111,6 @@ if ($_SESSION['autenticado']!='si'){
                                           $idExM2=$_GET['id_historia'];
                                           $sql2 = "DELETE FROM Historial WHERE Id_Historia ='$idExM2'";
                                           echo $sql2;
-                                          // if ($conn->query($sql2) === TRUE) {
-                                          //   echo "Record updated successfully";
-                                          // } else {
-                                          //   echo "Error updating record: " . $conn->error;
-                                          // }
                                           $result = $conn->query($sql2);
                                         }
 
@@ -129,8 +124,8 @@ if ($_SESSION['autenticado']!='si'){
                                           $idExM =$_POST['id_historia'];
                                           $sql4 = "UPDATE Historial SET Paciente='$Paciente',
                                           Informacion='$Informacion', Alergias='$Alergias',
-                                          Antecedentes= '$Antecedentes', Altura = '$Altura',
-                                          Peso = '$Peso'
+                                          Antecedentes= '$Antecedentes', Altura = $Altura,
+                                          Peso = $Peso
                                           WHERE Id_Historia = $idExM";
                                           $conn->query($sql4);
                                         }
@@ -144,26 +139,26 @@ if ($_SESSION['autenticado']!='si'){
                                           $Altura = $_POST['numAltura'];
                                           $Peso = $_POST['numPeso'];
 
-                                          $sql3 = "INSERT INTO Historia(Id_Historia, Id_Paciente , Informacion, Alergias, Antecedentes, Altura, Peso)
+                                          $sql3 = "INSERT INTO Historial(Id_Historia, Id_Paciente , Informacion, Alergias, Antecedentes, Altura, Peso)
                                           VALUES(0, '$Paciente', '$Informacion', '$Alergias', '$Antecedentes', 'Altura', 'Peso')";
                                           $conn->query($sql3);
                                         }
 
-                                        $sql = "SELECT HIS.Id_Historia, PAC.Nombre + ' ' + PAC.Apellidos as Nombre, HIS.Informacion, HIS.Altura, HIS.Peso
+                                        $sql = "SELECT HIS.Id_Historia, CONCAT(PAC.Nombre, ' ', PAC.Apellidos) as Nombre  , HIS.Informacion, HIS.Altura, HIS.Peso
                                         FROM Historial AS HIS
                                         JOIN Paciente AS PAC
-                                        ON 'HIS.Id_Paciente' = 'PAC.Id_Paciente'";
+                                        ON HIS.Id_Paciente = PAC.Id_Paciente";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                           while($row = $result->fetch_assoc()){
                                          ?>
                                         <tr>
                                             <td><?php  echo $row['Id_Historia'] ?></td>
-                                            <td><?php  echo $row['Nombre'] ?></td>
-                                            <td><?php  echo $row['Descripcion'] ?></td>
-                                            <td><?php  echo $row['Costo'] ?></td>
-                                            <td><?php  echo $row['Existencia'] ?></td>
-                                            <td><a href="../proyecto/crudEMedicos.php?actualizar&Id_historia=<?php echo $row['Id_Historia'] ?>">Actualizar</a> </td>
+                                            <td><?php  echo $row['Nombre']; ?></td>
+                                            <td><?php  echo $row['Informacion'] ?></td>
+                                            <td><?php  echo $row['Altura'] ?></td>
+                                            <td><?php  echo $row['Peso'] ?></td>
+                                            <td><a href="../proyecto/crudEMedicos.php?actualizar&id_historia=<?php echo $row['Id_Historia'] ?>">Actualizar</a> </td>
                                             <td><a href="../proyecto/crudEMedicos.php?id_historia=<?php echo $row['Id_Historia'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
                                         <?php

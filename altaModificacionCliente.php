@@ -24,10 +24,20 @@
   <h2>Modificacion de Clientes</h2></div>
   <form action="../proyecto/crudClientes.php" method="post">
     <div class="mb-3 mt-3">
-      <label for="Id_Paciente">Numero de Paciente:</label>
+      <label for="numPaciente">Numero de Paciente:</label>
       <select class="form-control" name="numPaciente">
-
-
+        <option value="0"> Selecciona el Paciente</option>
+        <?php
+        $sql6 = "SELECT * FROM Paciente";
+        $result6 = $conn->query($sql6);
+        if ($result6->num_rows > 0) {
+          while($row2 = $result6->fetch_assoc()){
+         ?>
+         <option value="<?php echo $row2['Id_Paciente'] ?>"><?php echo $row2['Nombre']?> <?php echo $row2['Apellidos']  ?></option>
+         <?php
+       }//Cierre While
+     }// Cierre IF
+          ?>
       </select>
     </div>
     <div class="mb-3">
@@ -68,10 +78,20 @@
   <h2>Alta de Clientes</h2> </div>
   <form action="../proyecto/crudClientes.php" method="post">
     <div class="mb-3 mt-3">
-      <label for="Id_Paciente">Numero de Paciente:</label>
-      <select class="form-control" name="NumPaciente">
-
-
+      <label for="numPaciente">Numero de Paciente:</label>
+      <select class="form-control" name="numPaciente">
+        <option value="0"> Selecciona el Paciente</option>
+        <?php
+        $sql6 = "SELECT * FROM Paciente";
+        $result6 = $conn->query($sql6);
+        if ($result6->num_rows > 0) {
+          while($row2 = $result6->fetch_assoc()){
+         ?>
+         <option value="<?php echo $row2['Id_Paciente'] ?>"><?php echo $row2['Nombre']?> <?php echo $row2['Apellidos']  ?></option>
+         <?php
+       }//Cierre While
+     }// Cierre IF
+          ?>
       </select>
     </div>
     <div class="mb-3">

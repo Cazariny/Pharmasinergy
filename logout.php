@@ -6,7 +6,7 @@ $_SESSION = array();
 //Si se desea destruir la sesion completamente, borre tambien la cookie de la sesion
 //ESTO DESTRUIRA LA SESION Y NO LA INFORMACION DE LA SESION
 if (ini_get("session.use_cookies")) {
-  $params = session.get_cookie_params();
+  $params = session_get_cookie_params();
   setcookie(session_name(), '', time() - 42000,
   $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
 }

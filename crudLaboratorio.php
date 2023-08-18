@@ -61,36 +61,30 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Pacientes</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Laboratorios</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Registro de Pacientes</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Registro de Laboratorios</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                          <th>Id Paciente</th>
-                                          <th>Nombre</th>
-                                          <th>Apellido</th>
-                                          <th>Edad</th>
-                                          <th>Direccion</th>
-                                          <th>Actualizar</th>
-                                          <th>Eliminar</th>
+                                            <th>Id Laboratorio</th>
+                                            <th>Nombre</th>
+                                            <th>Actualizar</th>
+                                            <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                          <th>Id Paciente</th>
-                                          <th>Nombre</th>
-                                          <th>Apellido</th>
-                                          <th>Edad</th>
-                                          <th>Direccion</th>
-                                          <th>Actualizar</th>
-                                          <th>Eliminar</th>
+                                            <th>Id Laboratorio</th>
+                                            <th>Nombre</th>
+                                            <th>Actualizar</th>
+                                            <th>Eliminar</th>
                                         </tr>
                                     </tfoot>
 
@@ -108,49 +102,37 @@ if ($_SESSION['autenticado']!='si'){
                                       } else {
                                         //Borrar un usario de la tabla usuario en vase a su id_usuario
                                         if (isset($_GET['eliminar'])) {
-                                          $idpac2=$_GET['id_paciente'];
-                                          $sql2 = "DELETE FROM Paciente WHERE Id_Paciente ='$idpac2'";
+                                          $idlab2=$_GET['id_laboratorio'];
+                                          $sql2 = "DELETE FROM Laboratorio WHERE Id_Laboratorio ='$idlab2'";
                                           echo $sql2;
                                           $result = $conn->query($sql2);
                                         }
 
                                         if (isset($_POST['actualizar'])){
-                                          $NombrePaciente = $_POST['txtNombre'];
-                                          $Apellido = $_POST['txtApellido'];
-                                          $Edad = $_POST['numEdad'];
-                                          $Direccion = $_POST['txtDireccion'];
-                                          $idpac =$_POST['id_paciente'];
-                                          $sql4 = "UPDATE Paciente SET Nombre='$NombrePaciente',
-                                          Apellidos= '$Apellido', Edad='$Edad', Direccion = '$Direccion'
-                                          WHERE Id_Paciente = $idpac";
+                                          $NombreLaboratorio = $_POST['txtNombre'];
+                                          $idLab =$_POST['Laboratorio'];
+                                          $sql4 = "UPDATE Laboratorio SET Laboratorio='$NombreLaboratorio' WHERE Id_Laboratorio = $idLab";
                                           $conn->query($sql4);
                                         }
 
                                         //Insertar un nuevo Usuario
                                         if(isset($_POST['alta'])){
-                                          $NombrePaciente = $_POST['txtNombre'];
-                                          $Apellido = $_POST['txtApellido'];
-                                          $Edad = $_POST['numEdad'];
-                                          $Direccion = $_POST['txtDireccion'];
+                                          $NombreLaboratorio = $_POST['txtNombre'];
 
-                                          $sql3 = "INSERT INTO Paciente(Id_Paciente, Nombre, Apellidos, Edad, Direccion )
-                                          VALUES(0, '$NombrePaciente', '$Apellido', '$Edad', '$Direccion')";
+                                          $sql3 = "INSERT INTO Laboratorio(Id_Laboratorio, Laboratorio) VALUES(0, '$NombreLaboratorio')";
                                           $conn->query($sql3);
                                         }
 
-                                        $sql = "SELECT * FROM Paciente";
+                                        $sql = "SELECT * FROM Laboratorio";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                           while($row = $result->fetch_assoc()){
                                          ?>
                                         <tr>
-                                            <td><?php  echo $row['Id_Paciente'] ?></td>
-                                            <td><?php  echo $row['Nombre'] ?></td>
-                                            <td><?php  echo $row['Apellidos'] ?></td>
-                                            <td><?php  echo $row['Edad'] ?></td>
-                                            <td><?php  echo $row['Direccion'] ?></td>
-                                            <td><a href="../proyecto/crudPacientes.php?actualizar&id_paciente=<?php echo $row['Id_Paciente'] ?>">Actualizar</a> </td>
-                                            <td><a href="../proyecto/crudPacientes.php?id_paciente=<?php echo $row['Id_Paciente'].'&eliminar=1' ?>">Eliminar</a> </td>
+                                            <td><?php  echo $row['Id_Laboratorio'] ?></td>
+                                            <td><?php  echo $row['Laboratorio'] ?></td>
+                                            <td><a href="../proyecto/crudLaboratorio.php?actualizar&id_laboratorio=<?php echo $row['Id_Laboratorio'] ?>">Actualizar</a> </td>
+                                            <td><a href="../proyecto/crudLaboratorio.php?id_laboratorio=<?php echo $row['Id_Laboratorio'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
                                         <?php
                                       }//Cierre While
@@ -163,7 +145,7 @@ if ($_SESSION['autenticado']!='si'){
                             </div>
                         </div>
                     </div>
-                    <?php include "altaModificacionPaciente.php" ?>
+                    <?php include "altaModificacionLaboratorio.php" ?>
 
                 </div>
                 <!-- /.container-fluid -->

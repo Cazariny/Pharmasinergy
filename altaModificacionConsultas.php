@@ -12,72 +12,74 @@
 
    if (isset($_GET['actualizar'])){
 
-    $idProductoModificar = $_GET['Id_Producto'];
-    $sql4 = "SELECT * FROM Producto WHERE Id_Producto= $idProductoModificar";
+    $idConsultaModificar = $_GET['id_consulta'];
+    $sql4 = "SELECT * FROM Consulta WHERE Id_Consulta= $idConsultaModificar";
             $result4 = $conn->query($sql4);
             if ($result4->num_rows > 0) {
                 $row = $result4->fetch_assoc();
-
 ?>
 <div class="container mt-3">
     <div id="modificar">
-  <h2>Modificacion de Productos</h2></div>
-  <form action="../proyecto/crudProductos.php" method="post">
-    <div class="mb-3 mt-3">
-      <label for="checkbox">Es Medicamento ?:</label>
-      <input type="checkbox" class="form-control" id="checkbox"  name="checkMedicamento"
-      value ="<?php echo $row['EsMedicamento'];?>">
-    </div>
+  <h2>Modificacion de Consulta</h2></div>
+  <form action="../proyecto/crudConsultas.php" method="post">
     <div class="mb-3">
-      <label for="Nombre">Nombre:</label>
-      <input type="text" class="form-control" id="Nom_Producto" placeholder="Introduce el nombre del producto"
-       name="txtProducto"
-       value ="<?php echo $row['Nombre'];?>">
-    </div>
-    <div class="mb-3">
-      <label for="Nombre">Descripcion:</label>
-      <input type="text" class="form-control" id="Descripcion" placeholder="Introduce el nombre del producto"
-       name="txtDescripcion"
-       value ="<?php echo $row['Descripcion'];?>">
-    </div>
-    <div class="mb-3">
-      <label for="Marca">Marca:</label>
-      <select class="form-control" name="Marca">
-
-
+      <label for="Paciente">Paciente:</label>
+      <select class="form-control" name="Paciente">
+        <option value="0"> Selecciona el Paciente</option>
+        <?php
+        $sql5 = "SELECT * FROM Paciente";
+        $result5 = $conn->query($sql5);
+        if ($result5->num_rows > 0) {
+          while($row1 = $result5->fetch_assoc()){
+         ?>
+         <option value="<?php echo $row1['Id_Paciente'] ?>"><?php echo $row1['Nombre']?> <?php echo $row1['Apellidos']  ?></option>
+         <?php
+       }//Cierre While
+     }// Cierre IF
+          ?>
       </select>
-    </div>
-    <div class="mb-3">
-      <label for="UMedida">Unidad de Medida:</label>
-      <input type="number" class="form-control" id="UMedida" placeholder="Introduce la Unidad de Medida"
-       name="txtUMedida"
-       value ="<?php echo $row['UnidadMedida'];?>">
-    </div>
-    <div class="mb-3">
-      <label for="CostDir">Costo Directo:</label>
-      <input type="number" class="form-control" id="CostDir" placeholder="Introduce el Costo de compra"
-       name="numCostDir"
-       value ="<?php echo $row['CostoDirecto'];?>">
-    </div>
-    <div class="mb-3">
-      <label for="Precio">Precio:</label>
-      <input type="number" class="form-control" id="Precio" placeholder="Introduce el Precio de Venta"
-       name="numPrecio"
-       value ="<?php echo $row['Precio'];?>">
-    </div>
-    <div class="mb-3">
-      <label for="Exist">Existencia:</label>
-      <input type="number" class="form-control" id="Exist" placeholder="Introduce el numero de Existencia"
-       name="numExist"
-       value ="<?php echo $row['Existencia'];?>">
-    </div>
-    <div class="mb-3">
-      <label for="PReorden">Punto de Reorden:</label>
-      <input type="number" class="form-control" id="PReorden" placeholder="Introduce el Punto de Reorden"
-       name="numPReorden"
-       value ="<?php echo $row['PuntoReorden'];?>">
-    </div>
-    <input type ="hidden" name="id_producto" value="<?php echo $idProductoModificar?>">
+  </div>
+  <div class="mb-3">
+    <label for="Doctor">Doctor:</label>
+    <select class="form-control" name="Doctor">
+      <option value="0"> Selecciona el Doctor</option>
+      <?php
+      $sql6 = "SELECT * FROM Doctores";
+      $result6 = $conn->query($sql6);
+      if ($result6->num_rows > 0) {
+        while($row2 = $result6->fetch_assoc()){
+       ?>
+       <option value="<?php echo $row2['Id_Doctor'] ?>"><?php echo $row2['Nombre']?> <?php echo $row2['Apellido']  ?></option>
+       <?php
+     }//Cierre While
+   }// Cierre IF
+        ?>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="Fecha">Fecha:</label>
+    <input type="date" class="form-control" id="Fecha" placeholder="Introduce la Fecha"
+     name="Fecha" value=" <?php echo $row['Fecha'] ?>">
+  </div>
+  <div class="mb-3">
+    <label for="Motivo">Motivo:</label><br>
+    <textarea id="Motivo" name="txtMotivo" rows="8" cols="80" >
+      <?php echo $row['Motivo'];?>
+    </textarea>
+  </div>
+  <div class="mb-3">
+    <label for="Diagnostico">Diagnostico:</label><br>
+    <textarea id="Diagnostico" name="txtDiagnostico" rows="8" cols="80" >
+      <?php echo $row['Diagnostico'];?>
+    </textarea>
+  </div>
+  <div class="mb-3">
+    <label for="Tratamiento">Tratamiento:</label><br>
+    <textarea id="Tratamiento" name="txtTratamiento" rows="8" cols="80" >
+      <?php echo $row['Tratamiento'];?>
+    </textarea>
+  </div>
+    <input type ="hidden" name="id_consulta" value="<?php echo $idConsultaModificar?>">
     <input type ="hidden" name="actualizar" value="1">
     <button type="submit" class="btn btn-primary">Actualizar</button>
   </form>
@@ -88,53 +90,66 @@
 ?>
 <div class="container mt-3">
   <div id="alta">
-  <h2>Alta de Producto</h2> </div>
-  <form action="../proyecto/crudProductos.php" method="post">
-    <div class="mb-3 mt-3">
-      <label for="checkbox">Es Medicamento ?:</label>
-      <input type="checkbox" class="form-control" id="checkbox"  name="checkMedicamento">
-    </div>
+  <h2>Alta de Consultas</h2> </div>
+  <form action="../proyecto/crudConsultas.php" method="post">
     <div class="mb-3">
-      <label for="Nombre">Nombre:</label>
-      <input type="text" class="form-control" id="Nom_Producto" placeholder="Introduce el nombre del producto"
-       name="txtProducto">
-    </div>
-    <div class="mb-3">
-      <label for="Nombre">Descripcion:</label>
-      <input type="text" class="form-control" id="Descripcion" placeholder="Introduce el nombre del producto"
-       name="txtDescripcion">
-    </div>
-    <div class="mb-3">
-      <label for="Marca">Marca:</label>
-      <select class="form-control" name="Marca">
+      <label for="Paciente">Paciente:</label>
+      <select class="form-control" name="Paciente">
+        <option value="0"> Selecciona el Paciente</option>
+        <?php
+        $sql5 = "SELECT * FROM Paciente";
+        $result5 = $conn->query($sql5);
+        if ($result5->num_rows > 0) {
+          while($row = $result5->fetch_assoc()){
+         ?>
+         <option value="<?php echo $row['Id_Paciente'] ?>"><?php echo $row['Nombre']?> <?php echo $row['Apellidos']  ?></option>
+         <?php
+       }//Cierre While
+     }// Cierre IF
 
+          ?>
+        </select>
+    </div>
+    <div class="mb-3">
+      <label for="Doctor">Doctor:</label>
+      <select class="form-control" name="Doctor">
+        <option value="0"> Selecciona el Doctor</option>
+        <?php
+        $sql6 = "SELECT * FROM Doctores";
+        $result6 = $conn->query($sql6);
+        if ($result6->num_rows > 0) {
+          while($row = $result6->fetch_assoc()){
+         ?>
+         <option value="<?php echo $row['Id_Doctor'] ?>"><?php echo $row['Nombre']?> <?php echo $row['Apellido']  ?></option>
+         <?php
+       }//Cierre While
+     }// Cierre IF
 
-      </select>
+          ?>
+        </select>
     </div>
     <div class="mb-3">
-      <label for="UMedida">Unidad de Medida:</label>
-      <input type="number" class="form-control" id="UMedida" placeholder="Introduce la Unidad de Medida"
-       name="txtUMedida">
+      <label for="Fecha">Altura:</label>
+      <input type="date" class="form-control" id="Fecha" placeholder="Introduce la Fecha"
+       name="Fecha">
     </div>
     <div class="mb-3">
-      <label for="CostDir">Costo Directo:</label>
-      <input type="number" class="form-control" id="CostDir" placeholder="Introduce el Costo de compra"
-       name="numCostDir">
+      <label for="Motivo">Motivo:</label><br>
+      <textarea id="Motivo" name="txtMotivo" rows="8" cols="80" >
+
+      </textarea>
     </div>
     <div class="mb-3">
-      <label for="Precio">Precio:</label>
-      <input type="number" class="form-control" id="Precio" placeholder="Introduce el Precio de Venta"
-       name="numPrecio">
+      <label for="Diagnostico">Diagnostico:</label><br>
+      <textarea id="Diagnostico" name="txtDiagnostico" rows="8" cols="80" >
+
+      </textarea>
     </div>
     <div class="mb-3">
-      <label for="Exist">Existencia:</label>
-      <input type="number" class="form-control" id="Exist" placeholder="Introduce el numero de Existencia"
-       name="numExist">
-    </div>
-    <div class="mb-3">
-      <label for="PReorden">Punto de Reorden:</label>
-      <input type="number" class="form-control" id="PReorden" placeholder="Introduce el Punto de Reorden"
-       name="numPReorden">
+      <label for="Tratamiento">Tratamiento:</label><br>
+      <textarea id="Tratamiento" name="txtTratamiento" rows="8" cols="80" >
+
+      </textarea>
     </div>
     <input type ="hidden" name="alta" value="1">
     <button type="submit" class="btn btn-primary" name="alta">Agregar</button>

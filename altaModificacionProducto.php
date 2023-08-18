@@ -43,9 +43,20 @@
     <div class="mb-3">
       <label for="Marca">Marca:</label>
       <select class="form-control" name="Marca">
+        <option value="0"> Selecciona La Marca</option>
+        <?php
+        $sql5 = "SELECT * FROM Marca";
+        $result5 = $conn->query($sql5);
+        if ($result5->num_rows > 0) {
+          while($row = $result5->fetch_assoc()){
+         ?>
+         <option value="<?php echo $row['Id_Marca'] ?>"><?php echo $row['Marca']  ?></option>
+         <?php
+       }//Cierre While
+     }// Cierre IF
 
-
-      </select>
+          ?>
+        </select>
     </div>
     <div class="mb-3">
       <label for="UMedida">Unidad de Medida:</label>
@@ -107,9 +118,20 @@
     <div class="mb-3">
       <label for="Marca">Marca:</label>
       <select class="form-control" name="Marca">
+        <option value="0"> Selecciona La Marca</option>
+        <?php
+        $sql5 = "SELECT * FROM Marca";
+        $result5 = $conn->query($sql5);
+        if ($result5->num_rows > 0) {
+          while($row = $result5->fetch_assoc()){
+         ?>
+         <option value="<?php echo $row['Id_Marca'] ?>"><?php echo $row['Marca']  ?></option>
+         <?php
+       }//Cierre While
+     }// Cierre IF
 
-
-      </select>
+          ?>
+        </select>
     </div>
     <div class="mb-3">
       <label for="UMedida">Unidad de Medida:</label>

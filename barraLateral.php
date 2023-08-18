@@ -2,9 +2,9 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <i class=""></i>
         </div>
         <div class="sidebar-brand-text mx-3">Pharmasinergy</div>
     </a>
@@ -47,6 +47,11 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="../proyecto/crudDoctores.php">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Doctores</span></a>
+    </li>
     <?php } ?>
     <?php
       if ($_SESSION['noRolUsuario']==2) {
@@ -65,6 +70,11 @@
          <a class="nav-link" href="../proyecto/crudEMedicos.php">
              <i class="fas fa-fw fa-chart-area"></i>
              <span>Expedientes Medicos</span></a>
+     </li>
+     <li class="nav-item">
+         <a class="nav-link" href="../proyecto/crudDoctores.php">
+             <i class="fas fa-fw fa-chart-area"></i>
+             <span>Doctores</span></a>
      </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
@@ -100,6 +110,11 @@
          <a class="nav-link" href="../proyecto/crudMarcas.php">
              <i class="fas fa-fw fa-chart-area"></i>
              <span>Marcas</span></a>
+     </li>
+     <li class="nav-item">
+         <a class="nav-link" href="../proyecto/crudlaboratorio.php">
+             <i class="fas fa-fw fa-chart-area"></i>
+             <span>Laboratorios</span></a>
      </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->

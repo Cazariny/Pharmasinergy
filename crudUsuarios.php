@@ -109,11 +109,6 @@ if ($_SESSION['autenticado']!='si'){
                                           $idu2=$_GET['id_usuario'];
                                           $sql2 = "DELETE FROM Usuario WHERE Id_Usuario ='$idu2'";
                                           echo $sql2;
-                                          // if ($conn->query($sql2) === TRUE) {
-                                          //   echo "Record updated successfully";
-                                          // } else {
-                                          //   echo "Error updating record: " . $conn->error;
-                                          // }
                                           $result = $conn->query($sql2);
                                         }
 

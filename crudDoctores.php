@@ -61,34 +61,34 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Pacientes</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Doctores</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Registro de Pacientes</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Registro de Doctores</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                          <th>Id Paciente</th>
+                                          <th>Id Doctor</th>
                                           <th>Nombre</th>
                                           <th>Apellido</th>
-                                          <th>Edad</th>
-                                          <th>Direccion</th>
+                                          <th>Especialidad</th>
+                                          <th>RFC</th>
                                           <th>Actualizar</th>
                                           <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                          <th>Id Paciente</th>
+                                          <th>Id Doctor</th>
                                           <th>Nombre</th>
                                           <th>Apellido</th>
-                                          <th>Edad</th>
-                                          <th>Direccion</th>
+                                          <th>Especialidad</th>
+                                          <th>RFC</th>
                                           <th>Actualizar</th>
                                           <th>Eliminar</th>
                                         </tr>
@@ -100,57 +100,57 @@ if ($_SESSION['autenticado']!='si'){
                                       $username = "root";
                                       $password = "";
                                       $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA VASE DE DATOS
+                                      //CREANDO CONEXION A LA BASE DE DATOS
                                       $conn = new mysqli($servername, $username, $password, $dbname, 3307);
                                       //Verificando Conexion
                                       if ($conn->connect_error) {
                                         die("Conexion Fallida: " . $conn->connect_error);
                                       } else {
-                                        //Borrar un usario de la tabla usuario en vase a su id_usuario
+                                        //Borrar un Doctor de la tabla doctor en vase a su id_doctor
                                         if (isset($_GET['eliminar'])) {
-                                          $idpac2=$_GET['id_paciente'];
-                                          $sql2 = "DELETE FROM Paciente WHERE Id_Paciente ='$idpac2'";
+                                          $iddoc2=$_GET['id_doctor'];
+                                          $sql2 = "DELETE FROM Doctores WHERE Id_Doctor ='$idpac2'";
                                           echo $sql2;
                                           $result = $conn->query($sql2);
                                         }
 
                                         if (isset($_POST['actualizar'])){
-                                          $NombrePaciente = $_POST['txtNombre'];
+                                          $NombreDoctor = $_POST['txtNombre'];
                                           $Apellido = $_POST['txtApellido'];
-                                          $Edad = $_POST['numEdad'];
-                                          $Direccion = $_POST['txtDireccion'];
-                                          $idpac =$_POST['id_paciente'];
-                                          $sql4 = "UPDATE Paciente SET Nombre='$NombrePaciente',
-                                          Apellidos= '$Apellido', Edad='$Edad', Direccion = '$Direccion'
-                                          WHERE Id_Paciente = $idpac";
+                                          $Especialidad = $_POST['txtEspecialidad'];
+                                          $RFC = $_POST['txtRFC'];
+                                          $iddoc =$_POST['id_doctor'];
+                                          $sql4 = "UPDATE Paciente SET Nombre='$NombreDoctor',
+                                          Apellido= '$Apellido', Especialidad='$Especialidad', RFC = '$RFC'
+                                          WHERE Id_Doctor = $iddoc";
                                           $conn->query($sql4);
                                         }
 
-                                        //Insertar un nuevo Usuario
+                                        //Insertar un nuevo Doctor
                                         if(isset($_POST['alta'])){
-                                          $NombrePaciente = $_POST['txtNombre'];
+                                          $NombreDoctor = $_POST['txtNombre'];
                                           $Apellido = $_POST['txtApellido'];
-                                          $Edad = $_POST['numEdad'];
-                                          $Direccion = $_POST['txtDireccion'];
+                                          $Especialidad = $_POST['txtEspecialidad'];
+                                          $RFC = $_POST['txtRFC'];
 
-                                          $sql3 = "INSERT INTO Paciente(Id_Paciente, Nombre, Apellidos, Edad, Direccion )
-                                          VALUES(0, '$NombrePaciente', '$Apellido', '$Edad', '$Direccion')";
+                                          $sql3 = "INSERT INTO Doctores(Id_Doctor, Nombre, Apellido, Especialidad, RFC )
+                                          VALUES(0, '$NombreDoctor', '$Apellido', '$Especialidad', '$RFC')";
                                           $conn->query($sql3);
                                         }
 
-                                        $sql = "SELECT * FROM Paciente";
+                                        $sql = "SELECT * FROM Doctores";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                           while($row = $result->fetch_assoc()){
                                          ?>
                                         <tr>
-                                            <td><?php  echo $row['Id_Paciente'] ?></td>
+                                            <td><?php  echo $row['Id_Doctor'] ?></td>
                                             <td><?php  echo $row['Nombre'] ?></td>
-                                            <td><?php  echo $row['Apellidos'] ?></td>
-                                            <td><?php  echo $row['Edad'] ?></td>
-                                            <td><?php  echo $row['Direccion'] ?></td>
-                                            <td><a href="../proyecto/crudPacientes.php?actualizar&id_paciente=<?php echo $row['Id_Paciente'] ?>">Actualizar</a> </td>
-                                            <td><a href="../proyecto/crudPacientes.php?id_paciente=<?php echo $row['Id_Paciente'].'&eliminar=1' ?>">Eliminar</a> </td>
+                                            <td><?php  echo $row['Apellido'] ?></td>
+                                            <td><?php  echo $row['Especialidad'] ?></td>
+                                            <td><?php  echo $row['RFC'] ?></td>
+                                            <td><a href="../proyecto/crudDoctores.php?actualizar&id_doctor=<?php echo $row['Id_Doctor'] ?>">Actualizar</a> </td>
+                                            <td><a href="../proyecto/crudDoctores.php?id_doctor=<?php echo $row['Id_Doctor'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
                                         <?php
                                       }//Cierre While
@@ -163,7 +163,7 @@ if ($_SESSION['autenticado']!='si'){
                             </div>
                         </div>
                     </div>
-                    <?php include "altaModificacionPaciente.php" ?>
+                    <?php include "altaModificacionDoctores.php" ?>
 
                 </div>
                 <!-- /.container-fluid -->

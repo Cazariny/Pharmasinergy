@@ -102,8 +102,8 @@ if ($_SESSION['autenticado']!='si'){
                                       } else {
                                         //Borrar un usario de la tabla usuario en vase a su id_usuario
                                         if (isset($_GET['eliminar'])) {
-                                          $idMar2=$_GET['id_producto'];
-                                          $sql2 = "DELETE FROM Marca WHERE Id_Producto ='$idMar2'";
+                                          $idMar2=$_GET['id_marca'];
+                                          $sql2 = "DELETE FROM Marca WHERE Id_Marca ='$idMar2'";
                                           echo $sql2;
                                           // if ($conn->query($sql2) === TRUE) {
                                           //   echo "Record updated successfully";
@@ -124,7 +124,7 @@ if ($_SESSION['autenticado']!='si'){
                                         if(isset($_POST['alta'])){
                                           $NombreMarca = $_POST['txtNombre'];
 
-                                          $sql3 = "INSERT INTO productos(Id_Marca, Marca) VALUES(0, '$NombreMarca')";
+                                          $sql3 = "INSERT INTO Marca(Id_Marca, Marca) VALUES(0, '$NombreMarca')";
                                           $conn->query($sql3);
                                         }
 

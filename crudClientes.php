@@ -100,22 +100,17 @@ if ($_SESSION['autenticado']!='si'){
                                       $username = "root";
                                       $password = "";
                                       $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA VASE DE DATOS
+                                      //CREANDO CONEXION A LA BASE DE DATOS
                                       $conn = new mysqli($servername, $username, $password, $dbname, 3307);
                                       //Verificando Conexion
                                       if ($conn->connect_error) {
                                         die("Conexion Fallida: " . $conn->connect_error);
                                       } else {
-                                        //Borrar un usario de la tabla usuario en vase a su id_usuario
+                                        //Borrar un usario de la tabla usuario en base a su id_Cliente
                                         if (isset($_GET['eliminar'])) {
                                           $idcli2=$_GET['id_cliente'];
                                           $sql2 = "DELETE FROM Cliente WHERE Id_Cliente ='$idcli2'";
                                           echo $sql2;
-                                          // if ($conn->query($sql2) === TRUE) {
-                                          //   echo "Record updated successfully";
-                                          // } else {
-                                          //   echo "Error updating record: " . $conn->error;
-                                          // }
                                           $result = $conn->query($sql2);
                                         }
 
@@ -132,7 +127,7 @@ if ($_SESSION['autenticado']!='si'){
                                           $conn->query($sql4);
                                         }
 
-                                        //Insertar un nuevo Usuario
+                                        //Insertar un nuevo Cliente
                                         if(isset($_POST['alta'])){
                                           $NombreCliente = $_POST['txtNombre'];
                                           $NumPaciente = $_POST['numPaciente'];

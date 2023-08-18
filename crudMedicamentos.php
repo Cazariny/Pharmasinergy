@@ -100,13 +100,13 @@ if ($_SESSION['autenticado']!='si'){
                                       $username = "root";
                                       $password = "";
                                       $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA VASE DE DATOS
+                                      //CREANDO CONEXION A LA BASE DE DATOS
                                       $conn = new mysqli($servername, $username, $password, $dbname, 3307);
                                       //Verificando Conexion
                                       if ($conn->connect_error) {
                                         die("Conexion Fallida: " . $conn->connect_error);
                                       } else {
-                                        //Borrar un usario de la tabla usuario en vase a su id_usuario
+                                        //Borrar un usario de la tabla usuario en base a su id_medicamento
                                         if (isset($_GET['eliminar'])) {
                                           $idMed2=$_GET['id_medicamento'];
                                           $sql2 = "DELETE FROM Medicamento WHERE Id_Medicamento ='$idMed2'";
@@ -131,7 +131,7 @@ if ($_SESSION['autenticado']!='si'){
                                           $conn->query($sql4);
                                         }
 
-                                        //Insertar un nuevo Usuario
+                                        //Insertar un nuevo Medicamento
                                         if(isset($_POST['alta'])){
                                           $Nombre = $_POST['txtNombre'];
                                           $Laboratorio = $_POST['laboratorio'];
@@ -139,24 +139,24 @@ if ($_SESSION['autenticado']!='si'){
                                           $IsGenerico = $_POST['checkgenerico'];
 
                                           $sql3 = "INSERT INTO Medicamento(Id_Medicamento, Nombre, Id_Laboratorio, PrincipioActivo, IsGenerico)
-                                          VALUES(0, '$Nombre', '$Laboratorio', '$PActivo'. '$IsGenerico')";
+                                          VALUES(0, '$Nombre', '$Laboratorio', '$PActivo', '$IsGenerico')";
                                           $conn->query($sql3);
                                         }
 
-                                        $sql = "SELECT 'MED.'Id_Medicamento, 'MED.'Nombre, 'LAB.'Nombre, 'MED.'PrincipioActivo, 'MED.'IsGenerico
+                                        $sql = "SELECT MED.Id_Medicamento, MED.Nombre, LAB.Laboratorio, MED.PrincipioActivo, MED.IsGenerico
                                         FROM Medicamento AS MED
                                         JOIN Laboratorio AS LAB
-                                        ON 'LAB.Id_Laboratorio = MED.Id_Laboratorio' ";
+                                        ON LAB.Id_Laboratorio = MED.Id_Laboratorio ";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                           while($row = $result->fetch_assoc()){
                                          ?>
                                         <tr>
-                                            <td><?php  echo $row['MED.Id_Medicamento'] ?></td>
-                                            <td><?php  echo $row['MED.Nombre'] ?></td>
-                                            <td><?php  echo $row['LAB.Nombre'] ?></td>
-                                            <td><?php  echo $row['MED.PrincipioActivo'] ?></td>
-                                            <td><?php  echo $row['LAB.IsGenerico'] ?></td>
+                                            <td><?php  echo $row['Id_Medicamento'] ?></td>
+                                            <td><?php  echo $row['Nombre'] ?></td>
+                                            <td><?php  echo $row['Laboratorio'] ?></td>
+                                            <td><?php  echo $row['PrincipioActivo'] ?></td>
+                                            <td><?php  echo $row['IsGenerico'] ?></td>
                                             <td><a href="../proyecto/crudMedicamentos.php?actualizar&id_medicamento=<?php echo $row['Id_Medicamento'] ?>">Actualizar</a> </td>
                                             <td><a href="../proyecto/crudMedicamentos.php?id_medicamento=<?php echo $row['Id_Medicamento'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
@@ -183,7 +183,7 @@ if ($_SESSION['autenticado']!='si'){
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright EBMODEL; Pharmasinergy 2023</span>
                     </div>
                 </div>
             </footer>

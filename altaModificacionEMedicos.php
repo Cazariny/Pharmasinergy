@@ -12,8 +12,8 @@
 
    if (isset($_GET['actualizar'])){
 
-    $idProductoModificar = $_GET['Id_Producto'];
-    $sql4 = "SELECT * FROM Producto WHERE Id_Producto= $idProductoModificar";
+    $idHistoriaModificar = $_GET['id_historia'];
+    $sql4 = "SELECT * FROM Historial WHERE Id_Historia= $idHistoriaModificar";
             $result4 = $conn->query($sql4);
             if ($result4->num_rows > 0) {
                 $row = $result4->fetch_assoc();
@@ -21,63 +21,57 @@
 ?>
 <div class="container mt-3">
     <div id="modificar">
-  <h2>Modificacion de Productos</h2></div>
-  <form action="../proyecto/crudProductos.php" method="post">
-    <div class="mb-3 mt-3">
-      <label for="checkbox">Es Medicamento ?:</label>
-      <input type="checkbox" class="form-control" id="checkbox"  name="checkMedicamento"
-      value ="<?php echo $row['EsMedicamento'];?>">
-    </div>
+  <h2>Modificacion de Historia Clinica</h2></div>
+  <form action="../proyecto/crudEMedicos.php" method="post">
     <div class="mb-3">
-      <label for="Nombre">Nombre:</label>
-      <input type="text" class="form-control" id="Nom_Producto" placeholder="Introduce el nombre del producto"
-       name="txtProducto"
-       value ="<?php echo $row['Nombre'];?>">
-    </div>
-    <div class="mb-3">
-      <label for="Nombre">Descripcion:</label>
-      <input type="text" class="form-control" id="Descripcion" placeholder="Introduce el nombre del producto"
-       name="txtDescripcion"
-       value ="<?php echo $row['Descripcion'];?>">
-    </div>
-    <div class="mb-3">
-      <label for="Marca">Marca:</label>
-      <select class="form-control" name="Marca">
+      <label for="Paciente">Paciente:</label>
+      <select class="form-control" name="Paciente">
+        <option value="0"> Selecciona el Paciente</option>
+        <?php
+        $sql5 = "SELECT * FROM Paciente";
+        $result5 = $conn->query($sql5);
+        if ($result5->num_rows > 0) {
+          while($row1 = $result5->fetch_assoc()){
+         ?>
+         <option value="<?php echo $row1['Id_Paciente'] ?>"><?php echo $row1['Nombre']?> <?php echo $row1['Apellidos']  ?></option>
+         <?php
+       }//Cierre While
+     }// Cierre IF
 
-
-      </select>
+          ?>
+        </select>
     </div>
     <div class="mb-3">
-      <label for="UMedida">Unidad de Medida:</label>
-      <input type="number" class="form-control" id="UMedida" placeholder="Introduce la Unidad de Medida"
-       name="txtUMedida"
-       value ="<?php echo $row['UnidadMedida'];?>">
+      <label for="Informacion">Informacion:</label>
+      <textarea id="Informacion" name="txtInformacion" rows="8" cols="80" >
+        <?php echo $row['Informacion'];?>>
+      </textarea>
     </div>
     <div class="mb-3">
-      <label for="CostDir">Costo Directo:</label>
-      <input type="number" class="form-control" id="CostDir" placeholder="Introduce el Costo de compra"
-       name="numCostDir"
-       value ="<?php echo $row['CostoDirecto'];?>">
+      <label for="Alergias">Alergias:</label>
+      <textarea id="Alergias" name="txtAlergias" rows="8" cols="80" >
+        <?php echo $row['Alergias'];?>>
+      </textarea>
     </div>
     <div class="mb-3">
-      <label for="Precio">Precio:</label>
-      <input type="number" class="form-control" id="Precio" placeholder="Introduce el Precio de Venta"
-       name="numPrecio"
-       value ="<?php echo $row['Precio'];?>">
+      <label for="Antecedentes">Antecedentes:</label>
+      <textarea id="Antecedentes" name="txtAntecendentes" rows="8" cols="80" >
+        <?php echo $row['Antecedentes'];?>>
+      </textarea>
     </div>
     <div class="mb-3">
-      <label for="Exist">Existencia:</label>
-      <input type="number" class="form-control" id="Exist" placeholder="Introduce el numero de Existencia"
-       name="numExist"
-       value ="<?php echo $row['Existencia'];?>">
+      <label for="Altura">Altura:</label>
+      <input type="number" class="form-control" id="Altura" placeholder="Introduce la Altura"
+       name="numAltura"
+       value ="<?php echo $row['Altura'];?>">
     </div>
     <div class="mb-3">
-      <label for="PReorden">Punto de Reorden:</label>
-      <input type="number" class="form-control" id="PReorden" placeholder="Introduce el Punto de Reorden"
-       name="numPReorden"
-       value ="<?php echo $row['PuntoReorden'];?>">
+      <label for="Peso">Peso:</label>
+      <input type="number" class="form-control" id="Peso" placeholder="Introduce el Peso"
+       name="numPeso"
+       value ="<?php echo $row['Peso'];?>">
     </div>
-    <input type ="hidden" name="id_producto" value="<?php echo $idProductoModificar?>">
+    <input type ="hidden" name="id_historia" value="<?php echo $idHistoriaModificar?>">
     <input type ="hidden" name="actualizar" value="1">
     <button type="submit" class="btn btn-primary">Actualizar</button>
   </form>
@@ -88,53 +82,54 @@
 ?>
 <div class="container mt-3">
   <div id="alta">
-  <h2>Alta de Producto</h2> </div>
-  <form action="../proyecto/crudProductos.php" method="post">
-    <div class="mb-3 mt-3">
-      <label for="checkbox">Es Medicamento ?:</label>
-      <input type="checkbox" class="form-control" id="checkbox"  name="checkMedicamento">
-    </div>
+  <h2>Alta de Historia Medica</h2> </div>
+  <form action="../proyecto/crudEMedicos.php" method="post">
     <div class="mb-3">
-      <label for="Nombre">Nombre:</label>
-      <input type="text" class="form-control" id="Nom_Producto" placeholder="Introduce el nombre del producto"
-       name="txtProducto">
-    </div>
-    <div class="mb-3">
-      <label for="Nombre">Descripcion:</label>
-      <input type="text" class="form-control" id="Descripcion" placeholder="Introduce el nombre del producto"
-       name="txtDescripcion">
-    </div>
-    <div class="mb-3">
-      <label for="Marca">Marca:</label>
-      <select class="form-control" name="Marca">
+      <label for="Paciente">Paciente:</label>
+      <select class="form-control" name="Paciente">
+        <option value="0"> Selecciona el Paciente</option>
+        <?php
+        $sql5 = "SELECT * FROM Paciente";
+        $result5 = $conn->query($sql5);
+        if ($result5->num_rows > 0) {
+          while($row1 = $result5->fetch_assoc()){
+         ?>
+         <option value="<?php echo $row1['Id_Paciente'] ?>"><?php echo $row1['Nombre']?> <?php echo $row1['Apellidos']  ?></option>
+         <?php
+       }//Cierre While
+     }// Cierre IF
 
+          ?>
 
       </select>
     </div>
     <div class="mb-3">
-      <label for="UMedida">Unidad de Medida:</label>
-      <input type="number" class="form-control" id="UMedida" placeholder="Introduce la Unidad de Medida"
-       name="txtUMedida">
+      <label for="Informacion">Informacion:</label><br>
+      <textarea id="Informacion" name="txtInformacion" rows="8" cols="80" >
+
+      </textarea>
     </div>
     <div class="mb-3">
-      <label for="CostDir">Costo Directo:</label>
-      <input type="number" class="form-control" id="CostDir" placeholder="Introduce el Costo de compra"
-       name="numCostDir">
+      <label for="Alergias">Alergias:</label><br>
+      <textarea id="Alergias" name="txtAlergias" rows="8" cols="80" >
+
+      </textarea>
     </div>
     <div class="mb-3">
-      <label for="Precio">Precio:</label>
-      <input type="number" class="form-control" id="Precio" placeholder="Introduce el Precio de Venta"
-       name="numPrecio">
+      <label for="Antecedentes">Antecedentes:</label><br>
+      <textarea id="Antecedentes" name="txtAntecendentes" rows="8" cols="80" >
+
+      </textarea>
     </div>
     <div class="mb-3">
-      <label for="Exist">Existencia:</label>
-      <input type="number" class="form-control" id="Exist" placeholder="Introduce el numero de Existencia"
-       name="numExist">
+      <label for="Altura">Altura:</label>
+      <input type="number" class="form-control" id="Altura" placeholder="Introduce la Altura"
+       name="numAltura">
     </div>
     <div class="mb-3">
-      <label for="PReorden">Punto de Reorden:</label>
-      <input type="number" class="form-control" id="PReorden" placeholder="Introduce el Punto de Reorden"
-       name="numPReorden">
+      <label for="Peso">Peso:</label>
+      <input type="number" class="form-control" id="Peso" placeholder="Introduce el Peso"
+       name="numPeso">
     </div>
     <input type ="hidden" name="alta" value="1">
     <button type="submit" class="btn btn-primary" name="alta">Agregar</button>

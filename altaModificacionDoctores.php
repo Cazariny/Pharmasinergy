@@ -12,8 +12,8 @@
 
    if (isset($_GET['actualizar'])){
 
-    $idPacienteModificar = $_GET['id_paciente'];
-    $sql4 = "SELECT * FROM Paciente WHERE Id_Paciente= $idPacienteModificar";
+    $idDoctorModificar = $_GET['id_doctor'];
+    $sql4 = "SELECT * FROM Doctores WHERE Id_Doctor= $idDoctorModificar";
             $result4 = $conn->query($sql4);
             if ($result4->num_rows > 0) {
                 $row = $result4->fetch_assoc();
@@ -21,11 +21,11 @@
 ?>
 <div class="container mt-3">
     <div id="modificar">
-  <h2>Modificacion de Pacientes</h2></div>
-  <form action="../proyecto/crudPacientes.php" method="post">
+  <h2>Modificacion de Doctor</h2></div>
+  <form action="../proyecto/crudDoctores.php" method="post">
     <div class="mb-3">
       <label for="Nombre">Nombre:</label>
-      <input type="text" class="form-control" id="Nom_Paciente" placeholder="Introduce el nombre del cliente"
+      <input type="text" class="form-control" id="Nom_Doctor" placeholder="Introduce el nombre del Doctor"
        name="txtNombre"
        value ="<?php echo $row['Nombre'];?>">
     </div>
@@ -33,19 +33,19 @@
       <label for="Nombre">Apellido:</label>
       <input type="text" class="form-control" id="Apellido" placeholder="Introduce el Apellido"
        name="txtApellido"
-       value ="<?php echo $row['Apellidos'];?>">
+       value ="<?php echo $row['Apellido'];?>">
     </div>
     <div class="mb-3">
-      <label for="Nombre">Edad:</label>
-      <input type="number" class="form-control" id="Edad" placeholder="Introduce el RFC"
-       name="numEdad"
-       value ="<?php echo $row['Edad'];?>">
+      <label for="Especialidad">Especialidad:</label>
+      <input type="text" class="form-control" id="Edad" placeholder="Introduce la Especialidad"
+       name="txtEspecialidad"
+       value ="<?php echo $row['Especialidad'];?>">
     </div>
     <div class="mb-3">
-      <label for="Direccion">Direccion:</label>
-      <input type="text" class="form-control" id="Direccion" placeholder="Introduce la Direccion"
-       name="txtDireccion"
-       value ="<?php echo $row['Direccion'];?>">
+      <label for="RFC">RFC:</label>
+      <input type="text" class="form-control" id="Direccion" placeholder="Introduce el RFC"
+       name="txtRFC"
+       value ="<?php echo $row['RFC'];?>">
     </div>
     <input type ="hidden" name="id_paciente" value="<?php echo $idPacienteModificar?>">
     <input type ="hidden" name="actualizar" value="1">
@@ -58,27 +58,27 @@
 ?>
 <div class="container mt-3">
   <div id="alta">
-  <h2>Alta de Pacientes</h2> </div>
-  <form action="../proyecto/crudPacientes.php" method="post">
+  <h2>Alta de Doctores</h2> </div>
+  <form action="../proyecto/crudDoctores.php" method="post">
     <div class="mb-3">
       <label for="Nombre">Nombre:</label>
-      <input type="text" class="form-control" id="Nom_Paciente" placeholder="Introduce el nombre del Paciente"
+      <input type="text" class="form-control" id="Nom_Doctor" placeholder="Introduce el nombre del Doctor"
        name="txtNombre">
     </div>
     <div class="mb-3">
       <label for="Nombre">Apellido:</label>
-      <input type="text" class="form-control" id="Apellidos" placeholder="Introduce los Apellidos"
-       name="txtApellido"
+      <input type="text" class="form-control" id="Apellido" placeholder="Introduce el Apellido"
+       name="txtApellido">
     </div>
     <div class="mb-3">
-      <label for="Nombre">Edad:</label>
-      <input type="number" class="form-control" id="Edad" placeholder="Introduce La Edad"
-       name="numEdad">
+      <label for="Especialidad">Especialidad:</label>
+      <input type="text" class="form-control" id="Edad" placeholder="Introduce la Especialidad"
+       name="txtEspecialidad">
     </div>
     <div class="mb-3">
-      <label for="Direccion">Direccion:</label>
-      <input type="text" class="form-control" id="Direccion" placeholder="Introduce la Direccion"
-       name="txtDireccion">
+      <label for="RFC">RFC:</label>
+      <input type="text" class="form-control" id="Direccion" placeholder="Introduce el RFC"
+       name="txtRFC">
     </div>
     <input type ="hidden" name="alta" value="1">
     <button type="submit" class="btn btn-primary" name="alta">Agregar</button>

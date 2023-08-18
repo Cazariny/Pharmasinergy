@@ -61,36 +61,36 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Productos</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Consultas</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Registro de Productos</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Registro de Consultas</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id Producto</th>
-                                            <th>Nombre</th>
-                                            <th>Descripcion</th>
-                                            <th>Costo</th>
-                                            <th>Existencia</th>
-                                            <th>Actualizar</th>
-                                            <th>Eliminar</th>
+                                          <th>Id Consulta</th>
+                                          <th>Nombre Paciente</th>
+                                          <th>Nombre Doctor</th>
+                                          <th>Fecha</th>
+                                          <th>Motivo</th>
+                                          <th>Actualizar</th>
+                                          <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Id Producto</th>
-                                            <th>Nombre</th>
-                                            <th>Descripcion</th>
-                                            <th>Costo</th>
-                                            <th>Existencia</th>
-                                            <th>Actualizar</th>
-                                            <th>Eliminar</th>
+                                          <th>Id Consulta</th>
+                                          <th>Nombre Paciente</th>
+                                          <th>Nombre Doctor</th>
+                                          <th>Fecha</th>
+                                          <th>Motivo</th>
+                                          <th>Actualizar</th>
+                                          <th>Eliminar</th>
                                         </tr>
                                     </tfoot>
 
@@ -108,60 +108,64 @@ if ($_SESSION['autenticado']!='si'){
                                       } else {
                                         //Borrar un usario de la tabla usuario en vase a su id_usuario
                                         if (isset($_GET['eliminar'])) {
-                                          $idpro2=$_GET['id_producto'];
-                                          $sql2 = "DELETE FROM Producto WHERE Id_Producto ='$idpro2'";
+                                          $idcon2=$_GET['id_consulta'];
+                                          $sql2 = "DELETE FROM Consulta WHERE Id_Consulta ='$idcon2'";
                                           echo $sql2;
-                                          // if ($conn->query($sql2) === TRUE) {
-                                          //   echo "Record updated successfully";
-                                          // } else {
-                                          //   echo "Error updating record: " . $conn->error;
-                                          // }
                                           $result = $conn->query($sql2);
                                         }
 
                                         if (isset($_POST['actualizar'])){
-                                          $IsMedicamento = $_POST['checkMedicamento'];
-                                          $Medicamento = $_POST['txtProducto'];
-                                          $Descripcion = $_POST['txtDescripcion'];
-                                          $Marca = $_POST['numMarca'];
-                                          $CostDir = $_POST['numCostDir'];
-                                          $Precio = $_POST['numPrecio'];
-                                          $Existencia = $_POST['numExist'];
-                                          $PuntoReorden = $_POST['numPReorden'];
-                                          $idPro =$_POST['id_producto'];
-                                          $sql4 = "UPDATE productos SET Nombre='nombreUsuario',
-                                          Password='$passwordUsuario', Rol=$RolUsuario WHERE Id_Usuario = $idUsu";
+                                          $Paciente = $_POST['Paciente'];
+                                          $Doctor = $_POST['Doctor'];
+                                          $Fecha = $_POST['Fecha'];
+                                          $Motivo = $_POST['txtMotivo'];
+                                          $Diagnostico = $_POST['txtDiagnostico'];
+                                          $Tratamiento = $_POST['txtTratamiento'];
+                                          $idcon =$_POST['id_consulta'];
+                                          $sql4 = "UPDATE Consulta SET Id_Paciente= $Paciente,
+                                          Id_Doctor= $Doctor, Fecha='$Fecha',
+                                          Motivo = '$Motivo', Diagnostico = '$Diagnostico',
+                                          Tratamiento = '$Tratamiento'
+                                          WHERE Id_Consulta = $idcon";
                                           $conn->query($sql4);
                                         }
 
                                         //Insertar un nuevo Usuario
                                         if(isset($_POST['alta'])){
-                                          $IsMedicamento = $_POST['checkMedicamento'];
-                                          $Medicamento = $_POST['txtProducto'];
-                                          $Descripcion = $_POST['txtDescripcion'];
-                                          $Marca = $_POST['Marca'];
-                                          $CostDir = $_POST['numCostDir'];
-                                          $Precio = $_POST['numPrecio'];
-                                          $Existencia = $_POST['numExist'];
-                                          $PuntoReorden = $_POST['numPReorden'];
+                                          $Paciente = $_POST['Paciente'];
+                                          $Doctor = $_POST['Doctor'];
+                                          $Fecha = $_POST['Fecha'];
+                                          $Motivo = $_POST['txtMotivo'];
+                                          $Diagnostico = $_POST['txtDiagnostico'];
+                                          $Tratamiento = $_POST['txtTratamiento'];
 
-                                          $sql3 = "INSERT INTO productos(Id_Usuario, Nombre, Password, Rol) VALUES(0, '$nombreUsuario', '$passwordUsuario', '$rolUsuario')";
+                                          $sql3 = "INSERT INTO Consulta(Id_Consulta, Id_Paciente, Id_Doctor, Fecha, Motivo, Diagnostico, Tratamiento)
+                                          VALUES(0, '$Paciente', '$Doctor', '$Fecha', '$Motivo', '$Diagnostico', '$Tratamiento')";
                                           $conn->query($sql3);
                                         }
 
-                                        $sql = "SELECT * FROM Productos";
+                                        $sql = "SELECT CON.Id_Consulta,
+                                        CONCAT(PAC.Nombre, ' ', PAC.Apellidos) as Nombre,
+                                        CONCAT(DOC.Nombre, ' ', DOC.Apellido) as Doctor,
+                                        CON.Fecha,
+                                        CON.Motivo
+                                        FROM Consulta AS CON
+                                        JOIN Paciente as PAC
+                                        ON PAC.Id_Paciente = CON.Id_Paciente
+                                        JOIN Doctores as DOC
+                                        ON DOC.Id_Doctor = CON.Id_Doctor";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                           while($row = $result->fetch_assoc()){
                                          ?>
                                         <tr>
-                                            <td><?php  echo $row['Id_Producto'] ?></td>
+                                            <td><?php  echo $row['Id_Consulta'] ?></td>
                                             <td><?php  echo $row['Nombre'] ?></td>
-                                            <td><?php  echo $row['Descripcion'] ?></td>
-                                            <td><?php  echo $row['Costo'] ?></td>
-                                            <td><?php  echo $row['Existencia'] ?></td>
-                                            <td><a href="../proyecto/crudProductos.php?actualizar&id_usuario=<?php echo $row['Id_Usuario'] ?>">Actualizar</a> </td>
-                                            <td><a href="../proyecto/crudProductos.php?id_usuario=<?php echo $row['Id_Usuario'].'&eliminar=1' ?>">Eliminar</a> </td>
+                                            <td><?php  echo $row['Doctor'] ?></td>
+                                            <td><?php  echo $row['Fecha'] ?></td>
+                                            <td><?php  echo $row['Motivo'] ?></td>
+                                            <td><a href="../proyecto/crudConsultas.php?actualizar&id_consulta=<?php echo $row['Id_Consulta'] ?>">Actualizar</a> </td>
+                                            <td><a href="../proyecto/crudConsultas.php?id_consulta=<?php echo $row['Id_Consulta'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
                                         <?php
                                       }//Cierre While
@@ -174,7 +178,7 @@ if ($_SESSION['autenticado']!='si'){
                             </div>
                         </div>
                     </div>
-                    <?php include "altaModificacionProducto.php" ?>
+                    <?php include "altaModificacionConsultas.php" ?>
 
                 </div>
                 <!-- /.container-fluid -->
