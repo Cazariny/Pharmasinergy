@@ -42,34 +42,34 @@
         </select>
     </div>
     <div class="mb-3">
-      <label for="Informacion">Informacion:</label>
+      <label for="Informacion">Informacion:</label><br>
       <textarea id="Informacion" name="txtInformacion" rows="8" cols="80" >
-        <?php echo $row['Informacion'];?>>
+        <?php echo $row['Informacion'];?>
       </textarea>
     </div>
     <div class="mb-3">
-      <label for="Alergias">Alergias:</label>
+      <label for="Alergias">Alergias:</label><br>
       <textarea id="Alergias" name="txtAlergias" rows="8" cols="80" >
-        <?php echo $row['Alergias'];?>>
+        <?php echo $row['Alergias'];?>
       </textarea>
     </div>
     <div class="mb-3">
-      <label for="Antecedentes">Antecedentes:</label>
+      <label for="Antecedentes">Antecedentes:</label><br>
       <textarea id="Antecedentes" name="txtAntecendentes" rows="8" cols="80" >
-        <?php echo $row['Antecedentes'];?>>
+        <?php echo $row['Antecedentes'];?>
       </textarea>
     </div>
     <div class="mb-3">
-      <label for="Altura">Altura:</label>
+      <label for="Altura">Altura:</label><br>
       <input type="number" class="form-control" id="Altura" placeholder="Introduce la Altura"
        name="numAltura"
-       value ="<?php echo $row['Altura'];?>">
+       value ="<?php echo $row['Altura'];?>"
     </div>
     <div class="mb-3">
       <label for="Peso">Peso:</label>
       <input type="number" class="form-control" id="Peso" placeholder="Introduce el Peso"
        name="numPeso"
-       value ="<?php echo $row['Peso'];?>">
+       value ="<?php echo $row['Peso'];?>"
     </div>
     <input type ="hidden" name="id_historia" value="<?php echo $idHistoriaModificar?>">
     <input type ="hidden" name="actualizar" value="1">

@@ -2,10 +2,12 @@
 // Inicializacion de manejo de sesión
    session_start();
 //COMPRUEBA QUE EL USUARIO ESTA AUTENTICADO
+require ('conexion.php');
 if ($_SESSION['autenticado']!='si'){
      header("Location:../proyecto/login.php?error=1");
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -52,9 +54,7 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
                  <div class="card shadow mb-4">
                           <!-- Card Header -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                   Pharmasinergy
-                      </div>
+
                     </div>
 
                 <!-- Begin Page Content -->
@@ -96,13 +96,7 @@ if ($_SESSION['autenticado']!='si'){
 
                                     <tbody>
                                       <?php
-                                      $servername = "localhost";
-                                      $username = "root";
-                                      $password = "";
-                                      $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA BASE DE DATOS
-                                      $conn = new mysqli($servername, $username, $password, $dbname, 3307);
-                                      //Verificando Conexion
+
                                       if ($conn->connect_error) {
                                         die("Conexion Fallida: " . $conn->connect_error);
                                       } else {
@@ -136,7 +130,7 @@ if ($_SESSION['autenticado']!='si'){
                                           $Direccion = $_POST['txtDireccion'];
 
                                           $sql3 = "INSERT INTO Cliente(Id_Cliente, Id_Paciente, Nombre, Apellido, RFC, Direccion )
-                                          VALUES(0, '$NombreCliente', '$NumPaciente', '$Apellido', '$RFC', '$Direccion')";
+                                          VALUES(0, '$NumPaciente', '$NombreCliente', '$Apellido', '$RFC', '$Direccion')";
                                           $conn->query($sql3);
                                         }
 
@@ -148,9 +142,9 @@ if ($_SESSION['autenticado']!='si'){
                                         <tr>
                                             <td><?php  echo $row['Id_Cliente'] ?></td>
                                             <td><?php  echo $row['Nombre'] ?></td>
-                                            <td><?php  echo $row['Direccion'] ?></td>
-                                            <td><?php  echo $row['Telefono'] ?></td>
+                                            <td><?php  echo $row['Apellido'] ?></td>
                                             <td><?php  echo $row['RFC'] ?></td>
+                                            <td><?php  echo $row['Direccion'] ?></td>
                                             <td><a href="../proyecto/crudClientes.php?actualizar&id_cliente=<?php echo $row['Id_Cliente'] ?>">Actualizar</a> </td>
                                             <td><a href="../proyecto/crudClientes.php?id_cliente=<?php echo $row['Id_Cliente'].'&eliminar=1' ?>">Eliminar</a> </td>
                                         </tr>
@@ -177,7 +171,7 @@ if ($_SESSION['autenticado']!='si'){
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright EABMODEL; Pharmasinergy 2020</span>
                     </div>
                 </div>
             </footer>
@@ -230,6 +224,17 @@ if ($_SESSION['autenticado']!='si'){
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    <script type="text/javascript">
+    function selectDatos(e) {
+      var nombre =  e.target.selectedOptions[0].getAttribute("nombre")
+      var apellido =  e.target.selectedOptions[0].getAttribute("apellido")
+      var direccion =  e.target.selectedOptions[0].getAttribute("direccion")
+      document.getElementById("Nom_Cliente").value = nombre;
+      // document.getElementById("Nom_Cliente").setAttribute("disabled", "disabled");
+      document.getElementById("Apellido").value = apellido;
+      // document.getElementById("Apellido").setAttribute("disabled", "disabled");
+    }
+    </script>
 
 </body>
 

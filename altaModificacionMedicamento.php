@@ -26,8 +26,7 @@
     <div class="mb-3">
       <label for="Nombre">Nombre:</label>
       <input type="text" class="form-control" id="Nom_Producto" placeholder="Introduce el nombre del Medicamento"
-       name="txtProducto"
-       value ="<?php echo $row['Nombre'];?>">
+       name="txtNombre" value ="<?php echo $row['Nombre'];?>">
     </div>
     <div class="mb-3 mt-3">
       <label for="Laboratorio">Laboratorio:</label>
@@ -57,7 +56,11 @@
       <label for="IsGenerico">Es Generico ?:</label>
       <input type="checkbox" class="form-control" id="IsGenerico" placeholder="Introduce el Costo de compra"
        name="checkgenerico"
-       value ="<?php echo $row['IsGenerico'];?>">
+       value ="1">
+       <label for="IsGenerico">Es Patente ?:</label>
+       <input type="checkbox" class="form-control" id="IsGenerico" placeholder="Introduce el Costo de compra"
+        name="checkgenerico"
+        value ="0">
     </div>
     <input type ="hidden" name="id_medicamento" value="<?php echo $idMedicamentoModificar?>">
     <input type ="hidden" name="actualizar" value="1">
@@ -103,16 +106,12 @@
     <div class="mb-3">
       <label for="IsGenerico">Es Generico ?:</label>
       <input type="checkbox" class="form-control" id="IsGenerico" placeholder="Introduce el Costo de compra"
-       name="checkgenerico">
-       <?php
-       if(isset($_POST['checkgenerico'])){
-    //$stok is checked and value = 1
-    $IsGenerico = 1;
-  }
-  else{
-    //$stok is nog checked and value=0
-    $IsGenerico=0;
-  } ?>
+       name="checkgenerico"
+       value ="1">
+       <label for="IsGenerico">Es Patente ?:</label>
+       <input type="checkbox" class="form-control" id="IsGenerico" placeholder="Introduce el Costo de compra"
+        name="checkgenerico"
+        value ="0">
     </div>
     <input type ="hidden" name="alta" value="1">
     <button type="submit" class="btn btn-primary" name="alta">Agregar</button>

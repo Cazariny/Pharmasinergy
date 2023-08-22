@@ -12,7 +12,7 @@
 
    if (isset($_GET['actualizar'])){
 
-    $idOrdenModificar = $_GET['Id_Producto'];
+    $idOrdenModificar = $_GET['id_orden'];
     $sql4 = "SELECT * FROM Ordenes WHERE Id_Orden= $idOrdenModificar";
             $result4 = $conn->query($sql4);
             if ($result4->num_rows > 0) {
@@ -25,15 +25,15 @@
   <form action="../proyecto/crudOrdenes.php" method="post">
     <div class="mb-3">
       <label for="Cliente">Cliente:</label>
-      <select class="form-control" name="Marca">
-        <option value="0"> Selecciona el Cliente</option>
+      <select class="form-control" name="Cliente">
+        <option disabled selected> Selecciona el Cliente</option>
         <?php
         $sql5 = "SELECT Id_Cliente, CONCAT(Nombre, ' ', Apellido) as Nombre FROM Cliente";
         $result5 = $conn->query($sql5);
         if ($result5->num_rows > 0) {
-          while($row = $result5->fetch_assoc()){
+          while($row1 = $result5->fetch_assoc()){
          ?>
-         <option value="<?php echo $row['Id_Cliente'] ?>"><?php echo $row['Nombre']  ?></option>
+         <option value="<?php echo $row1['Id_Cliente'] ?>"><?php echo $row1['Nombre']  ?></option>
          <?php
        }//Cierre While
      }// Cierre IF
@@ -44,25 +44,24 @@
     <div class="mb-3">
       <label for="Fecha">Fecha:</label>
       <input type="date" class="form-control" id="Descripcion" placeholder="Fecha"
-       name="txtDescripcion">
+       name="Fecha">
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="Total">Total</label>
       <input type="number" class="form-control" id="UMedida" placeholder="Introduce el Total"
        name="numTotal">
-    </div>
+    </div> -->
     <div class="mb-3">
       <label for="consulta">Consulta:</label>
       <select class="form-control" name="consulta">
-        <option value="0"> Selecciona la Consulta</option>
+        <option disabled selected> Selecciona la Consulta</option>
         <?php
-        $sql5 = "SELECT * FROM Consulta
-        ";
+        $sql6 = "SELECT * FROM Consulta";
         $result6 = $conn->query($sql6);
         if ($result6->num_rows > 0) {
-          while($row = $result6->fetch_assoc()){
+          while($row2 = $result6->fetch_assoc()){
          ?>
-         <option value="<?php echo $row['Id_Consulta'] ?>"><?php echo $row['Id_Cliente']  ?></option>
+         <option value="<?php echo $row2['Id_Consulta'] ?>"><?php echo $row2['Id_Paciente']  ?></option>
          <?php
        }//Cierre While
      }// Cierre IF
@@ -70,7 +69,7 @@
           ?>
         </select>
     </div>
-    <input type ="hidden" name="id_producto" value="<?php echo $idProductoModificar?>">
+    <input type ="hidden" name="id_orden" value="<?php echo $idOrdenModificar?>">
     <input type ="hidden" name="actualizar" value="1">
     <button type="submit" class="btn btn-primary">Actualizar</button>
   </form>
@@ -85,44 +84,42 @@
   <form action="../proyecto/crudOrdenes.php" method="post">
     <div class="mb-3">
       <label for="Cliente">Cliente:</label>
-      <select class="form-control" name="Marca">
-        <option value="0"> Selecciona el Cliente</option>
+      <select class="form-control" name="Cliente">
+        <option disabled selected> Selecciona el Cliente</option>
         <?php
         $sql5 = "SELECT Id_Cliente, CONCAT(Nombre, ' ', Apellido) as Nombre FROM Cliente";
         $result5 = $conn->query($sql5);
         if ($result5->num_rows > 0) {
-          while($row = $result5->fetch_assoc()){
-         ?>
-         <option value="<?php echo $row['Id_Cliente'] ?>"><?php echo $row['Nombre']  ?></option>
+          while($row1 = $result5->fetch_assoc()){
+            ?>
+         <option value="<?php echo $row1['Id_Cliente'] ?>"><?php echo $row1['Nombre']  ?></option>
          <?php
        }//Cierre While
      }// Cierre IF
-
-          ?>
+     ?>
         </select>
     </div>
     <div class="mb-3">
       <label for="Fecha">Fecha:</label>
       <input type="date" class="form-control" id="Descripcion" placeholder="Fecha"
-       name="txtDescripcion">
+       name="Fecha">
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="Total">Total</label>
       <input type="number" class="form-control" id="UMedida" placeholder="Introduce el Total"
        name="numTotal">
-    </div>
+    </div> -->
     <div class="mb-3">
       <label for="consulta">Consulta:</label>
       <select class="form-control" name="consulta">
-        <option value="0"> Selecciona la Consulta</option>
+        <option disabled selected> Selecciona la Consulta</option>
         <?php
-        $sql5 = "SELECT * FROM Consulta
-        ";
+        $sql6 = "SELECT * FROM Consulta";
         $result6 = $conn->query($sql6);
         if ($result6->num_rows > 0) {
-          while($row = $result6->fetch_assoc()){
+          while($row2 = $result6->fetch_assoc()){
          ?>
-         <option value="<?php echo $row['Id_Consulta'] ?>"><?php echo $row['Id_Cliente']  ?></option>
+         <option value="<?php echo $row2['Id_Consulta'] ?>"><?php echo $row2['Id_Paciente']  ?></option>
          <?php
        }//Cierre While
      }// Cierre IF

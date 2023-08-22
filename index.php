@@ -52,9 +52,7 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
                  <div class="card shadow mb-4">
                           <!-- Card Header -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                   Pharmasinergy
-                      </div>
+                            
                     </div>
 
         <!-- card de identificacion del sistema -->

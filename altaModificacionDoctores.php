@@ -47,7 +47,7 @@
        name="txtRFC"
        value ="<?php echo $row['RFC'];?>">
     </div>
-    <input type ="hidden" name="id_paciente" value="<?php echo $idPacienteModificar?>">
+    <input type ="hidden" name="id_doctor" value="<?php echo $idDoctorModificar?>">
     <input type ="hidden" name="actualizar" value="1">
     <button type="submit" class="btn btn-primary">Actualizar</button>
   </form>

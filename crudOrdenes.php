@@ -5,6 +5,7 @@
 if ($_SESSION['autenticado']!='si'){
      header("Location:../proyecto/login.php?error=1");
 }
+require ('conexion.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,9 +53,9 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
                  <div class="card shadow mb-4">
                           <!-- Card Header -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <!-- <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                    Pharmasinergy
-                      </div>
+                      </div> -->
                     </div>
 
                 <!-- Begin Page Content -->
@@ -73,11 +74,10 @@ if ($_SESSION['autenticado']!='si'){
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                          <th>Id Orden</th>
-                                          <th>Cliente</th>
+                                          <th>Id_Orden</th>
+                                          <th>Nombre Cliente</th>
                                           <th>Fecha</th>
                                           <th>Total</th>
-                                          <th>Id_Consulta</th>
                                           <th>Actualizar</th>
                                           <th>Eliminar</th>
                                           <th>Detalles</th>
@@ -85,11 +85,10 @@ if ($_SESSION['autenticado']!='si'){
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                          <th>Id Orden</th>
-                                          <th>Cliente</th>
+                                          <th>Id_Orden</th>
+                                          <th>Nombre Cliente</th>
                                           <th>Fecha</th>
                                           <th>Total</th>
-                                          <th>Id_Consulta</th>
                                           <th>Actualizar</th>
                                           <th>Eliminar</th>
                                           <th>Detalles</th>
@@ -98,32 +97,26 @@ if ($_SESSION['autenticado']!='si'){
 
                                     <tbody>
                                       <?php
-                                      $servername = "localhost";
-                                      $username = "root";
-                                      $password = "";
-                                      $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA VASE DE DATOS
-                                      $conn = new mysqli($servername, $username, $password, $dbname, 3307);
                                       //Verificando Conexion
                                       if ($conn->connect_error) {
                                         die("Conexion Fallida: " . $conn->connect_error);
                                       } else {
-                                        //Borrar una orden de la tabla ordenes en base a su id_orden
+                                        //Borrar un usario de la tabla usuario en vase a su id_usuario
                                         if (isset($_GET['eliminar'])) {
                                           $idOrd2=$_GET['id_orden'];
                                           $sql2 = "DELETE FROM Ordenes WHERE Id_Orden ='$idOrd2'";
-                                          echo $sql2;
+
                                           $result = $conn->query($sql2);
                                         }
 
                                         if (isset($_POST['actualizar'])){
                                           $Cliente = $_POST['Cliente'];
                                           $Fecha = $_POST['Fecha'];
-                                          $Total = $_POST['numTotal'];
-                                          $Consulta = $_POST['Id_Consulta'];
+                                          // $Total = $_POST['numTotal'];
+                                          $Consulta = $_POST['consulta'];
                                           $idOrd =$_POST['id_orden'];
                                           $sql4 = "UPDATE Ordenes SET Id_Cliente='$Cliente',
-                                          Fecha='$Fecha', Total=$Total, Id_Consulta='$Consulta' WHERE Id_Orden = $idOrd";
+                                          Fecha='$Fecha', Id_Consulta='$Consulta' WHERE Id_Orden = $idOrd";
                                           $conn->query($sql4);
                                         }
 
@@ -131,13 +124,15 @@ if ($_SESSION['autenticado']!='si'){
                                         if(isset($_POST['alta'])){
                                           $Cliente = $_POST['Cliente'];
                                           $Fecha = $_POST['Fecha'];
-                                          $Total = $_POST['numTotal'];
-                                          $Consulta = $_POST['Id_Consulta'];
+                                          $Total = 0;
+                                          $Consulta = $_POST['consulta'];
 
                                           $sql3 = "INSERT INTO Ordenes(Id_Orden, Id_Cliente, Fecha, Total, Id_Consulta)
                                           VALUES(0, '$Cliente', '$Fecha', '$Total', '$Consulta')";
                                           $conn->query($sql3);
                                         }
+
+                                        $sql = "SELECT * FROM Ordenes";
 
                                         $sql = "SELECT ORD.Id_Orden, CONCAT(CLI.Nombre, ' ', CLI.Apellido) as Nombre, ORD.Fecha, ORD.Total, CON.Id_Consulta
                                         FROM Ordenes AS ORD
@@ -154,10 +149,10 @@ if ($_SESSION['autenticado']!='si'){
                                             <td><?php  echo $row['Nombre'] ?></td>
                                             <td><?php  echo $row['Fecha'] ?></td>
                                             <td><?php  echo $row['Total'] ?></td>
-                                            <td><?php  echo $row['Id_Consulta'] ?></td>
+
                                             <td><a href="../proyecto/crudOrdenes.php?actualizar&id_orden=<?php echo $row['Id_Orden'] ?>">Actualizar</a> </td>
                                             <td><a href="../proyecto/crudOrdenes.php?id_orden=<?php echo $row['Id_Orden'].'&eliminar=1' ?>">Eliminar</a> </td>
-                                            <td><a href="../proyecto/crudOrdenDetalle.php?id_orden=<?php echo $row['Id_Orden']?>">Detalles</a> </td>
+                                            <td><a href="../proyecto/crudOrdenDetalle.php?detalle&id_orden=<?php echo $row['Id_Orden']?>">Detalles</a> </td>
                                         </tr>
                                         <?php
                                       }//Cierre While
@@ -182,7 +177,7 @@ if ($_SESSION['autenticado']!='si'){
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright EBMODEL; Pharmasinergy 2023</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>

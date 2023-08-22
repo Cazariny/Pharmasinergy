@@ -5,6 +5,7 @@
 if ($_SESSION['autenticado']!='si'){
      header("Location:../proyecto/login.php?error=1");
 }
+require ('conexion.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,9 +53,7 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
                  <div class="card shadow mb-4">
                           <!-- Card Header -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                   Pharmasinergy
-                      </div>
+
                     </div>
 
                 <!-- Begin Page Content -->
@@ -96,13 +95,6 @@ if ($_SESSION['autenticado']!='si'){
 
                                     <tbody>
                                       <?php
-                                      $servername = "localhost";
-                                      $username = "root";
-                                      $password = "";
-                                      $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA VASE DE DATOS
-                                      $conn = new mysqli($servername, $username, $password, $dbname, 3307);
-                                      //Verificando Conexion
                                       if ($conn->connect_error) {
                                         die("Conexion Fallida: " . $conn->connect_error);
                                       } else {

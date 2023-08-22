@@ -5,6 +5,20 @@
 if ($_SESSION['autenticado']!='si'){
      header("Location:../proyecto/login.php?error=1");
 }
+require ('conexion.php');
+
+
+if (isset($_GET['detalle'])){
+
+ $idOrden = $_GET['id_orden'];
+
+ $sql4 = "SELECT * FROM Ordenes WHERE Id_Orden= $idOrden";
+         $result4 = $conn->query($sql4);
+         if ($result4->num_rows > 0) {
+             $row4 = $result4->fetch_assoc();
+           }
+          }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -50,18 +64,13 @@ if ($_SESSION['autenticado']!='si'){
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                 <div class="card shadow mb-4">
-                          <!-- Card Header -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                   Pharmasinergy
-                      </div>
-                    </div>
+
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Detalles de Orden</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Detalles de Orden </h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -74,53 +83,62 @@ if ($_SESSION['autenticado']!='si'){
                                     <thead>
                                         <tr>
                                           <th>Id Producto</th>
+                                          <th>Producto</th>
                                           <th>Cantidad</th>
                                           <th>PU</th>
                                           <th>Importe</th>
                                           <th>Actualizar</th>
-                                          <th>Eliminar</th>
+                                          <!-- <th>Eliminar</th> -->
+                                          <th>Guardar</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                           <th>Id Producto</th>
+                                          <th>Producto</th>
                                           <th>Cantidad</th>
                                           <th>PU</th>
                                           <th>Importe</th>
                                           <th>Actualizar</th>
-                                          <th>Eliminar</th>
+                                          <!-- <th>Eliminar</th> -->
+                                          <th>Guardar</th>
                                         </tr>
                                     </tfoot>
 
                                     <tbody>
                                       <?php
-                                      $servername = "localhost";
-                                      $username = "root";
-                                      $password = "";
-                                      $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA BASE DE DATOS
-                                      $conn = new mysqli($servername, $username, $password, $dbname, 3307);
                                       //Verificando Conexion
                                       if ($conn->connect_error) {
                                         die("Conexion Fallida: " . $conn->connect_error);
                                       } else {
                                         //Borrar un detalle de orden de la tabla ODetalle en vase a su Id_ODetalles
-                                        if (isset($_GET['eliminar'])) {
-                                          $idOrd2=$_GET['id_orden'];
-                                          $sql2 = "DELETE FROM Ordenes WHERE Id_Orden ='$idOrd2'";
-                                          echo $sql2;
-                                          $result = $conn->query($sql2);
-                                        }
+                                        // if (isset($_GET['eliminar'])) {
+                                        //   $idDet2 = $_GET['id_odetalle'];
+                                        //
+                                        //   $sql2 = "DELETE
+                                        //   FROM OrdenDetalle
+                                        //   WHERE Id_ODetalle = $idDet2";
+                                        //   // echo $sql2;
+                                        //   $result = $conn->query($sql2);
+                                        //   $sqlupd = "UPDATE Ordenes AS ORD
+                                        //   SET Total = (SELECT SUM(DET.Importe) FROM OrdenDetalle  as DET
+                                        //   WHERE ORD.Id_Orden = DET.Id_Orden)";
+                                        //   $conn->query($sqlupd);
+                                        // }
 
                                         if (isset($_POST['actualizar'])){
                                           $Producto = $_POST['Producto'];
                                           $Cantidad = $_POST['numCantidad'];
                                           $PU = $_POST['numPU'];
-                                          $Importe = $_POST['numImporte'];
+                                          $Importe = $PU * $Cantidad;
                                           $idDet =$_POST['id_odetalle'];
                                           $sql4 = "UPDATE OrdenDetalle SET Id_Producto='$Producto',
                                           Cantidad='$Cantidad', PU=$PU, Importe='$Importe' WHERE Id_ODetalle = $idDet";
                                           $conn->query($sql4);
+                                          $sqlupd = "UPDATE Ordenes AS ORD
+                                          SET Total = (SELECT SUM(DET.Importe) FROM OrdenDetalle  as DET
+                                          WHERE ORD.Id_Orden = DET.Id_Orden)";
+                                          $conn->query($sqlupd);
                                         }
 
                                         //Insertar un nuevo detalle de orden
@@ -128,15 +146,30 @@ if ($_SESSION['autenticado']!='si'){
                                           $Producto = $_POST['Producto'];
                                           $Cantidad = $_POST['numCantidad'];
                                           $PU = $_POST['numPU'];
-                                          $Importe = $_POST['numImporte'];
+                                          $Importe = $PU * $Cantidad;
+                                          $Orden = $idOrden;
+                                          //COMPROBAR SI SE ELIJIERON MAS PRODUCTOS DE LOS QUE HAY EN EXISTENCIA 
+                                          // $sqlch = "SELECT DET.Id_ODetalle, DET.Id_Orden, PRO.Descripcion, DET.Cantidad, DET.PU, DET.Importe, PRO.Existencia
+                                          // FROM OrdenDetalle as DET
+                                          // JOIN Productos as PRO
+                                          // ON PRO.Id_Producto = DET.Id_Producto";
+                                          // $conn->query($sqlch);
+                                          // if (if ) {
+                                          //   // code...
+                                          // }
+                                          //
 
                                           $sql3 = "INSERT INTO OrdenDetalle(Id_ODetalle, Id_Orden, Id_Producto, Cantidad, PU, Importe)
-                                          VALUES(0, 0,  '$Producto', '$Cantidad', '$PU', '$Importe')";
+                                          VALUES(0, '$Orden',  '$Producto', '$Cantidad', '$PU', '$Importe' )";
                                           $conn->query($sql3);
+                                          $sqlupd = "UPDATE Ordenes AS ORD
+                                          SET Total = (SELECT SUM(DET.Importe) FROM OrdenDetalle  as DET
+                                          WHERE ORD.Id_Orden = DET.Id_Orden)";
+                                          $conn->query($sqlupd);
                                         }
 
-                                        $sql = "SELECT DET.Id_ODetalle, DET.Id_Orden PRO.Descripcion, DET.Cantidad, DET.PU, DET.Importe
-                                        FROM OrdenDetalle
+                                        $sql = "SELECT DET.Id_ODetalle, DET.Id_Orden, PRO.Descripcion, DET.Cantidad, DET.PU, DET.Importe
+                                        FROM OrdenDetalle as DET
                                         JOIN Productos as PRO
                                         ON PRO.Id_Producto = DET.Id_Producto";
                                         $result = $conn->query($sql);
@@ -149,9 +182,9 @@ if ($_SESSION['autenticado']!='si'){
                                             <td><?php  echo $row['Cantidad'] ?></td>
                                             <td><?php  echo $row['PU'] ?></td>
                                             <td><?php  echo $row['Importe'] ?></td>
-                                            <td><a href="../proyecto/crudOrdenDetalle.php?actualizar&id_orden=<?php echo $row['Id_Orden'] ?>?id_odetalle=<?php echo $row['Id_ODetalle']?>">Actualizar</a> </td>
-                                            <td><a href="../proyecto/crudOrdenDetalle.php?id_orden=<?php echo $row['Id_Orden'] ?>?id_odetalle=<?php echo $row['Id_ODetalle']?>.'&eliminar=1' ?>">Eliminar</a> </td>
-                                            <td><a href="../proyecto/crudOrdenes.php">Detalles</a> </td>
+                                            <td><a href="../proyecto/crudOrdenDetalle.php?actualizar&id_orden=<?php echo $row['Id_Orden'] ?>&id_odetalle=<?php echo $row['Id_ODetalle']?>">Actualizar</a> </td>
+                                            <!-- <td><a href="../proyecto/crudOrdenDetalle.php?id_orden=<?php echo $row['Id_Orden'] ?>&id_odetalle=<?php echo $row['Id_ODetalle'].'&eliminar=1'?>">Eliminar</a> </td> -->
+                                            <td><a href="../proyecto/crudOrdenes.php">Guardar</a> </td>
                                         </tr>
                                         <?php
                                       }//Cierre While
@@ -164,7 +197,7 @@ if ($_SESSION['autenticado']!='si'){
                             </div>
                         </div>
                     </div>
-                    <?php include "altaModificacionOrdenes.php" ?>
+                    <?php include "altaModificacionODetalle.php" ?>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -176,7 +209,7 @@ if ($_SESSION['autenticado']!='si'){
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright EABMODEL; Pharmasinergy 2020</span>
                     </div>
                 </div>
             </footer>
@@ -229,6 +262,12 @@ if ($_SESSION['autenticado']!='si'){
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    <script type="text/javascript">
+    function llenarPrecio(e) {
+      var precio =  e.target.selectedOptions[0].getAttribute("PU")
+      document.getElementById("PU").value = precio;
+    }
+    </script>
 
 </body>
 

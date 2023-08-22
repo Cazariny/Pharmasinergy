@@ -5,6 +5,7 @@
 if ($_SESSION['autenticado']!='si'){
      header("Location:../proyecto/login.php?error=1");
 }
+require ('conexion.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -73,7 +74,7 @@ if ($_SESSION['autenticado']!='si'){
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Id Historia</th>
+                                          <th>Id Historia</th>
                                           <th>Nombre Paciente</th>
                                           <th>Informacion</th>
                                           <th>Altura</th>
@@ -96,13 +97,6 @@ if ($_SESSION['autenticado']!='si'){
 
                                     <tbody>
                                       <?php
-                                      $servername = "localhost";
-                                      $username = "root";
-                                      $password = "";
-                                      $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA BASE DE DATOS
-                                      $conn = new mysqli($servername, $username, $password, $dbname, 3307);
-                                      //Verificando Conexion
                                       if ($conn->connect_error) {
                                         die("Conexion Fallida: " . $conn->connect_error);
                                       } else {
@@ -110,7 +104,7 @@ if ($_SESSION['autenticado']!='si'){
                                         if (isset($_GET['eliminar'])) {
                                           $idExM2=$_GET['id_historia'];
                                           $sql2 = "DELETE FROM Historial WHERE Id_Historia ='$idExM2'";
-                                          echo $sql2;
+
                                           $result = $conn->query($sql2);
                                         }
 
@@ -122,7 +116,7 @@ if ($_SESSION['autenticado']!='si'){
                                           $Altura = $_POST['numAltura'];
                                           $Peso = $_POST['numPeso'];
                                           $idExM =$_POST['id_historia'];
-                                          $sql4 = "UPDATE Historial SET Paciente='$Paciente',
+                                          $sql4 = "UPDATE Historial SET Id_Paciente='$Paciente',
                                           Informacion='$Informacion', Alergias='$Alergias',
                                           Antecedentes= '$Antecedentes', Altura = $Altura,
                                           Peso = $Peso

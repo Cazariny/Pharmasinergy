@@ -5,6 +5,7 @@
 if ($_SESSION['autenticado']!='si'){
      header("Location:../proyecto/login.php?error=1");
 }
+require ('conexion.php')
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,9 +53,7 @@ if ($_SESSION['autenticado']!='si'){
                 <div class="container-fluid">
                  <div class="card shadow mb-4">
                           <!-- Card Header -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                   Pharmasinergy
-                      </div>
+                            
                     </div>
 
                 <!-- Begin Page Content -->
@@ -96,12 +95,6 @@ if ($_SESSION['autenticado']!='si'){
 
                                     <tbody>
                                       <?php
-                                      $servername = "localhost";
-                                      $username = "root";
-                                      $password = "";
-                                      $dbname = "Pharmasinergy";
-                                      //CREANDO CONEXION A LA VASE DE DATOS
-                                      $conn = new mysqli($servername, $username, $password, $dbname, 3307);
                                       //Verificando Conexion
                                       if ($conn->connect_error) {
                                         die("Conexion Fallida: " . $conn->connect_error);
@@ -109,26 +102,37 @@ if ($_SESSION['autenticado']!='si'){
                                         //Borrar un usario de la tabla usuario en vase a su id_usuario
                                         if (isset($_GET['eliminar'])) {
                                           $idpro2=$_GET['id_producto'];
-                                          $sql2 = "DELETE FROM Producto WHERE Id_Producto ='$idpro2'";
-                                          echo $sql2;
+                                          $sql2 = "DELETE FROM Productos WHERE Id_Producto ='$idpro2'";
+
                                           $result = $conn->query($sql2);
                                         }
 
                                         if (isset($_POST['actualizar'])){
                                           $IsMedicamento = $_POST['checkMedicamento'];
-                                          $Medicamento = $_POST['txtProducto'];
+                                          if ($IsMedicamento == 1) {
+                                          $Medicamento = $_POST['Medicamento'];
+                                        } else {
+                                          $Medicamento = 0;
+                                        }
+                                          $Producto = $_POST['txtProducto'];
                                           $Descripcion = $_POST['txtDescripcion'];
-                                          $Marca = $_POST['numMarca'];
+                                          $Marca = $_POST['Marca'];
                                           $UnidadMedida = $_POST['txtUMedida'];
                                           $CostDir = $_POST['numCostDir'];
                                           $Precio = $_POST['numPrecio'];
                                           $Existencia = $_POST['numExist'];
                                           $PuntoReorden = $_POST['numPReorden'];
                                           $idPro =$_POST['id_producto'];
-                                          $sql4 = "UPDATE productos SET Id_Medicamento='$Medicamento',
-                                          EsMedicamento='$IsMedicamento', Descripcion=$Descripcion,
-                                          Id_Marca='$Marca', UnidadMedida='$UnidadMedida', CostoDirecto='$CostDir',
-                                          Precio='$Precio', Existencia='$Existencia', PuntoReorden='$PuntoReorden'
+                                          $sql4 = "UPDATE Productos SET Id_Medicamento='$Medicamento',
+                                          EsMedicamento='$IsMedicamento',
+                                          Nombre = '$Producto',
+                                          Descripcion='$Descripcion',
+                                          Id_Marca='$Marca',
+                                          UnidadMedida='$UnidadMedida',
+                                          CostoDirecto='$CostDir',
+                                          Precio='$Precio',
+                                          Existencia='$Existencia',
+                                          PuntoReorden='$PuntoReorden'
                                           WHERE Id_Producto = $idPro";
                                           $conn->query($sql4);
                                         }
@@ -136,7 +140,12 @@ if ($_SESSION['autenticado']!='si'){
                                         //Insertar un nuevo Usuario
                                         if(isset($_POST['alta'])){
                                           $IsMedicamento = $_POST['checkMedicamento'];
-                                          $Medicamento = $_POST['txtProducto'];
+                                          if ($IsMedicamento == 1) {
+                                          $Medicamento = $_POST['Medicamento'];
+                                        } else {
+                                          $Medicamento = 0;
+                                        }
+                                          $Producto = $_POST['txtProducto'];
                                           $Descripcion = $_POST['txtDescripcion'];
                                           $Marca = $_POST['Marca'];
                                           $UnidadMedida = $_POST['txtUMedida'];
@@ -145,8 +154,28 @@ if ($_SESSION['autenticado']!='si'){
                                           $Existencia = $_POST['numExist'];
                                           $PuntoReorden = $_POST['numPReorden'];
 
-                                          $sql3 = "INSERT INTO Productos(Id_Producto, Id_Medicamento,EsMedicamento , Descripcion, Id_Marca, UnidadMedida, CostoDirecto, Precio, Existencia, PuntoReorden)
-                                          VALUES(0, '$Medicamento', '$IsMedicamento', '$Descripcion', '$Marca', '$UnidadMedida', '$CostDir', '$Precio', '$Existencia', '$PuntoReorden')";
+                                          $sql3 = "INSERT INTO Productos(Id_Producto,
+                                            Id_Medicamento,
+                                            EsMedicamento,
+                                            Nombre,
+                                            Descripcion,
+                                            Id_Marca,
+                                            UnidadMedida,
+                                            CostoDirecto,
+                                            Precio,
+                                            Existencia,
+                                            PuntoReorden)
+                                          VALUES(0,
+                                            '$Medicamento',
+                                            '$IsMedicamento',
+                                            '$Producto',
+                                            '$Descripcion',
+                                            '$Marca',
+                                            '$UnidadMedida',
+                                            '$CostDir',
+                                            '$Precio',
+                                            '$Existencia',
+                                            '$PuntoReorden')";
                                           $conn->query($sql3);
                                         }
 
@@ -159,7 +188,7 @@ if ($_SESSION['autenticado']!='si'){
                                             <td><?php  echo $row['Id_Producto'] ?></td>
                                             <td><?php  echo $row['Nombre'] ?></td>
                                             <td><?php  echo $row['Descripcion'] ?></td>
-                                            <td><?php  echo $row['Costo'] ?></td>
+                                            <td><?php  echo $row['CostoDirecto'] ?></td>
                                             <td><?php  echo $row['Existencia'] ?></td>
                                             <td><a href="../proyecto/crudProductos.php?actualizar&id_producto=<?php echo $row['Id_Producto'] ?>">Actualizar</a> </td>
                                             <td><a href="../proyecto/crudProductos.php?id_producto=<?php echo $row['Id_Producto'].'&eliminar=1' ?>">Eliminar</a> </td>
@@ -187,7 +216,7 @@ if ($_SESSION['autenticado']!='si'){
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright EABMODEL; Pharmasinergy 2020</span>
                     </div>
                 </div>
             </footer>
@@ -240,6 +269,21 @@ if ($_SESSION['autenticado']!='si'){
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    <script type="text/javascript">
+    function selectMed(e) {
+      var nombre =  e.target.selectedOptions[0].getAttribute("nombre")
+      document.getElementById("Nom_Producto").value = nombre;
+      // document.getElementById("Nom_Producto").setAttribute("disabled", "disabled");
+    }
+      $("#checkbox").change(function() {
+
+        document.getElementById("Med").removeAttribute("disabled");
+    });
+
+
+
+
+    </script>
 
 </body>
 
